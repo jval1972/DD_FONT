@@ -58,6 +58,8 @@ type
     procedure Reset;
     procedure DrawToCanvas(const C: TCanvas);
     procedure DrawToBitmap(const bm: TBitmap);
+    procedure DrawCharToCanvas(const C: TCanvas; const ch: Char);
+    procedure DrawCharToBitmap(const bm: TBitmap; const ch: Char);
     procedure FromFont(const fnt: TFont);
     procedure ToFont(const fnt: TFont);
     procedure SaveToStream(const strm: TStream);
@@ -168,6 +170,46 @@ begin
   bm.PixelFormat := pf32bit;
 
   DrawToCanvas(bm.Canvas);
+end;
+
+procedure TFontEngine.DrawCharToCanvas(const C: TCanvas; const ch: Char);
+var
+  letter: TBitmap;
+  lC: TCanvas;
+begin
+  letter := TBitmap.Create;
+  letter.Width := fDrawWidth;
+  letter.Height := fDrawHeight;
+  letter.PixelFormat := pf32bit;
+
+  lC := letter.Canvas;
+  lC.Pen.Style := psClear;
+  lC.Pen.Color := fBackColor;
+  lC.Brush.Style := bsSolid;
+  lC.Brush.Color := fBackColor;
+  lC.Font.Height := fHeight;
+  lC.Font.Pitch := fPitch;
+  lC.Font.Style := fStyle;
+  lC.Font.Charset := fCharset;
+  lC.Font.Color := fFrontColor;
+  lC.Font.Name := fFontName;
+  lC.Font.Size := fFontSize;
+
+  lC.FillRect(Rect(0, 0, fDrawWidth, fDrawHeight));
+  lC.TextOut(0, 0, ch);
+
+  C.Draw(0, 0, letter);
+
+  letter.Free;
+end;
+
+procedure TFontEngine.DrawCharToBitmap(const bm: TBitmap; const ch: Char);
+begin
+  bm.Width := fDrawWidth;
+  bm.Height := fDrawHeight;
+  bm.PixelFormat := pf32bit;
+
+  DrawCharToCanvas(bm.Canvas, ch);
 end;
 
 procedure TFontEngine.FromFont(const fnt: TFont);
