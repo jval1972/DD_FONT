@@ -33,7 +33,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ComCtrls, Buttons, Clipbrd, ExtDlgs, pngimage, xTGA, zBitmap,
-  Menus, ImgList, jpeg, StdCtrls, ff_undo, ff_filemenuhistory;
+  Menus, ImgList, jpeg, StdCtrls, ff_undo, ff_filemenuhistory, ff_engine;
 
 type
   TForm1 = class(TForm)
@@ -120,6 +120,7 @@ type
     undoManager: TUndoRedoManager;
     filemenuhistory: TFileMenuHistory;
     ffilename: string;
+    ff: TFontEngine;
     procedure Idle(Sender: TObject; var Done: Boolean);
     procedure Hint(Sender: TObject);
     procedure UpdateEnable;
@@ -163,6 +164,8 @@ begin
 
   buffer := TBitmap.Create;
   drawbuffer := TBitmap.Create;
+
+  ff := TFontEngine.Create;
 
   mousedown := False;
 
@@ -242,6 +245,8 @@ begin
 
   buffer.Free;
   drawbuffer.Free;
+
+  ff.Free;
 end;
 
 procedure TForm1.Idle(Sender: TObject; var Done: Boolean);
