@@ -52,7 +52,7 @@ type
     constructor Create; virtual;
     destructor Destroy; override;
     procedure DrawToCanvas(const C: TCanvas);
-    procedure DrawToBitemap(const bm: TBitmap);
+    procedure DrawToBitmap(const bm: TBitmap);
     property Height: Integer read fHeight write fHeight;
     property Pitch: TFontPitch read fPitch write fPitch;
     property Style: TFontStylesBase read fStyle write fStyle;
@@ -92,7 +92,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TFontEngine.Draw(const C: TCanvas);
+procedure TFontEngine.DrawToCanvas(const C: TCanvas);
 var
   buf, letter: TBitmap;
   bC, lC: TCanvas;
@@ -145,7 +145,7 @@ begin
   letter.Free;
 end;
 
-procedure TFontEngine.DrawToBitemap(const bm: TBitmap);
+procedure TFontEngine.DrawToBitmap(const bm: TBitmap);
 begin
   bm.Width := fDrawWidth * fGridWidth;
   bm.Height := fDrawHeight * fGridHeight;
