@@ -199,6 +199,7 @@ type
     procedure OnDrawWidthChange(Sender: TObject);
     procedure OnDrawHeightChange(Sender: TObject);
     procedure InstallExternalFont(const ttffile: string);
+    procedure InstallDoomFont;
   public
     { Public declarations }
   end;
@@ -211,7 +212,7 @@ implementation
 {$R *.dfm}
 
 uses
-  ff_utils, ff_defs;
+  ff_utils, ff_defs, ff_doomfont, ff_tmp;
 
 function EnumFontsProc(var LogFont: TLogFont; var TextMetric: TTextMetric;
   FontType: Integer; Data: Pointer): Integer; stdcall;
@@ -256,6 +257,8 @@ begin
   flastzoomwheel := GetTickCount;
 
   ExternalFonts := TStringList.Create;
+
+  InstallDoomFont;  // Must be called before filling the FontNamesComboBox and after creating ExternalFonts
 
   ff := TFontEngine.Create;
 
@@ -1021,6 +1024,31 @@ begin
   finally
     Screen.Cursor := crDefault;
   end;
+end;
+
+procedure TForm1.InstallDoomFont;
+// Must be called before filling the FontNamesComboBox and after creating ExternalFonts
+var
+  tmpfile: string;
+  pdat: PByteArray;
+  p: PChar;
+  m: TMemoryStream;
+begin
+  tmpfile := I_NewTempFile('doom.ttf');
+
+  m := TMemoryStream.Create;
+  try
+    pdat := @DoomFontData[0];
+    m.Write(pdat^, SizeOf(DoomFontData));
+    m.SaveToFile(tmpfile);
+  finally
+    m.Free;
+  end;
+
+  p := PChar(tmpfile);
+  AddFontResource(p);
+  SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+  ExternalFonts.Add(tmpfile);
 end;
 
 end.
