@@ -45,7 +45,8 @@ uses
   ff_undo in 'ff_undo.pas',
   ff_defs in 'ff_defs.pas',
   ff_engine in 'ff_engine.pas',
-  ff_slider in 'ff_slider.pas';
+  ff_slider in 'ff_slider.pas',
+  ff_doomfont in 'ff_doomfont.pas';
 
 {$R *.res}
 
