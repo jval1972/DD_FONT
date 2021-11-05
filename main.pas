@@ -41,7 +41,6 @@ type
     StatusBar1: TStatusBar;
     Panel2: TPanel;
     OpenSpeedButton1: TSpeedButton;
-    PasteSpeedButton1: TSpeedButton;
     SaveSpeedButton1: TSpeedButton;
     CopySpeedButton1: TSpeedButton;
     GridButton1: TSpeedButton;
@@ -54,7 +53,6 @@ type
     Edit1: TMenuItem;
     Copy1: TMenuItem;
     N2: TMenuItem;
-    Paste1: TMenuItem;
     Help1: TMenuItem;
     About1: TMenuItem;
     ToolPanel: TPanel;
@@ -90,7 +88,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure Paste1Click(Sender: TObject);
     procedure About1Click(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
@@ -266,15 +263,6 @@ begin
   begin
     InvalidatePaintBox;
     needsupdate := False;
-  end;
-end;
-
-procedure TForm1.Paste1Click(Sender: TObject);
-begin
-  if Clipboard.HasFormat(CF_BITMAP) then
-  begin
-    buffer.LoadFromClipboardFormat(CF_BITMAP, ClipBoard.GetAsHandle(cf_Bitmap), 0);
-    InvalidatePaintBox;
   end;
 end;
 
