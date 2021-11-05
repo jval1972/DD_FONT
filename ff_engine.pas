@@ -19,38 +19,17 @@
 //  02111-1307, USA.
 //
 // DESCRIPTION:
-//  Project file
+//  Font Engine
 //
 //------------------------------------------------------------------------------
 //  E-Mail: jimmyvalavanis@yahoo.gr
 //  Site  : https://sourceforge.net/projects/dd-font/
 //------------------------------------------------------------------------------
 
-program DD_FONT;
+unit ff_engine;
 
-uses
-  FastMM4 in 'FastMM4.pas',
-  FastMM4Messages in 'FastMM4Messages.pas',
-  Forms,
-  main in 'main.pas' {Form1},
-  pngextra in 'pngextra.pas',
-  pngimage in 'pngimage.pas',
-  pnglang in 'pnglang.pas',
-  xTGA in 'xTGA.pas',
-  zBitmap in 'zBitmap.pas',
-  zlibpas in 'zlibpas.pas',
-  ff_utils in 'ff_utils.pas',
-  ff_binary in 'ff_binary.pas',
-  ff_filemenuhistory in 'ff_filemenuhistory.pas',
-  ff_undo in 'ff_undo.pas',
-  ff_defs in 'ff_defs.pas',
-  ff_engine in 'ff_engine.pas';
+interface
 
-{$R *.res}
+implementation
 
-begin
-  Application.Initialize;
-  Application.Title := 'Font Editor';
-  Application.CreateForm(TForm1, Form1);
-  Application.Run;
 end.
