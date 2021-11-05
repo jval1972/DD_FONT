@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  DD_FONT: Font Creator
+//  DD_FONT: Doom Font Creator
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -416,13 +416,13 @@ begin
 end;
 
 resourcestring
-  rsTitle = 'Font Creator';
+  rsTitle = 'Doom Font Creator';
 
 procedure TForm1.About1Click(Sender: TObject);
 begin
   MessageBox(
     Handle,
-    PChar(Format('%s'#13#10'Version %s'#13#10#13#10'A tool for creating font images.'#13#10'© 2021, jvalavanis@gmail.com', [rsTitle, I_VersionBuilt])),
+    PChar(Format('%s'#13#10'Version %s'#13#10#13#10'A tool for creating font images for Doom.'#13#10'© 2021, jvalavanis@gmail.com', [rsTitle, I_VersionBuilt])),
     PChar(rsTitle),
     MB_OK or MB_ICONINFORMATION or MB_APPLMODAL);
 end;

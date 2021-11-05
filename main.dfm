@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 48
   Width = 1168
   Height = 692
-  Caption = 'Font Editor'
+  Caption = 'Doom Font Creator'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

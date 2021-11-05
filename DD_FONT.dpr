@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  DD_FONT: Font Creator
+//  DD_FONT: Doom Font Creator
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -53,7 +53,7 @@ uses
 
 begin
   Application.Initialize;
-  Application.Title := 'Font Creator';
+  Application.Title := 'Doom Font Creator';
   Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.
