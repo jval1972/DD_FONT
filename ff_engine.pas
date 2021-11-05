@@ -31,7 +31,7 @@ unit ff_engine;
 interface
 
 uses
-  Windows, Classes, Graphics;
+  Windows, SysUtils, Classes, Graphics;
 
 type
   TFontEngine = class(TObject)
@@ -53,6 +53,10 @@ type
     destructor Destroy; override;
     procedure DrawToCanvas(const C: TCanvas);
     procedure DrawToBitmap(const bm: TBitmap);
+    procedure SaveToStream(const strm: TStream);
+    procedure LoadFromStream(const strm: TStream);
+    procedure SaveToFile(const fn: string);
+    procedure LoadFromFile(const fn: string);
     property Height: Integer read fHeight write fHeight;
     property Pitch: TFontPitch read fPitch write fPitch;
     property Style: TFontStylesBase read fStyle write fStyle;
@@ -152,6 +156,155 @@ begin
   bm.PixelFormat := pf32bit;
 
   DrawToCanvas(bm.Canvas);
+end;
+
+const
+  sHeight = 'Height';
+  sPitch = 'Pitch';
+  sStyle = 'Style';
+  sCharset = 'Charset';
+  sFontName = 'FontName';
+  sDrawWidth = 'DrawWidth';
+  sDrawHeight = 'DrawHeight';
+  sFontSize = 'FontSize';
+  sFrontColor = 'FrontColor';
+  sBackColor = 'BackColor';
+  sGridWidth = 'GridWidth';
+  sGridHeight = 'GridHeight';
+
+procedure TFontEngine.SaveToStream(const strm: TStream);
+var
+  sl: TStringList;
+  stl: integer;
+begin
+  sl := TStringList.Create;
+  try
+    sl.Add(sHeight + '=' + IntToStr(fHeight));
+
+    sl.Add(sPitch + '=' + IntToStr(Ord(fPitch)));
+
+    stl := 0;
+    if fsBold in fStyle then
+      stl := stl or 1;
+    if fsItalic in fStyle then
+      stl := stl or 2;
+    if fsUnderline in fStyle then
+      stl := stl or 4;
+    if fsStrikeOut in fStyle then
+      stl := stl or 8;
+    sl.Add(sStyle + '=' + IntToStr(stl));
+
+    sl.Add(sCharset + '=' + IntToStr(fCharset));
+
+    sl.Add(sFontName + '=' + fFontName);
+
+    sl.Add(sDrawWidth + '=' + IntToStr(fDrawWidth));
+
+    sl.Add(sDrawHeight + '=' + IntToStr(fDrawHeight));
+
+    sl.Add(sFontSize + '=' + IntToStr(fFontSize));
+
+    sl.Add(sFrontColor + '=' + IntToStr(fFrontColor));
+
+    sl.Add(sBackColor + '=' + IntToStr(fBackColor));
+
+    sl.Add(sGridWidth + '=' + IntToStr(fGridWidth));
+
+    sl.Add(sGridHeight + '=' + IntToStr(fGridHeight));
+
+    sl.SaveToStream(strm);
+  finally
+    sl.Free;
+  end;
+end;
+
+procedure TFontEngine.LoadFromStream(const strm: TStream);
+var
+  sl: TStringList;
+  svalue: string;
+  tmp: integer;
+
+  procedure _load_int(const n: string; const pi: PInteger);
+  begin
+    svalue := sl.Values[n];
+    if svalue <> '' then
+      pi^ := StrToIntDef(svalue, pi^);
+  end;
+
+begin
+  sl := TStringList.Create;
+  try
+    sl.LoadFromStream(strm);
+
+    _load_int(sHeight, @fHeight);
+
+    tmp := Ord(fPitch);
+    _load_int(sPitch, @tmp);
+    fPitch := TFontPitch(tmp);
+
+    tmp := 0;
+    if fsBold in fStyle then
+      tmp := tmp or 1;
+    if fsItalic in fStyle then
+      tmp := tmp or 2;
+    if fsUnderline in fStyle then
+      tmp := tmp or 4;
+    if fsStrikeOut in fStyle then
+      tmp := tmp or 8;
+    _load_int(sStyle, @tmp);
+    fStyle := [];
+    if tmp and 1 <> 0 then
+      Include(fStyle, fsBold);
+    if tmp and 2 <> 0 then
+      Include(fStyle, fsItalic);
+    if tmp and 4 <> 0 then
+      Include(fStyle, fsUnderline);
+    if tmp and 8 <> 0 then
+      Include(fStyle, fsStrikeOut);
+
+    tmp := fCharset;
+    _load_int(sCharset, @tmp);
+    fCharset := tmp;
+
+    svalue := sl.Values[sFontName];
+    if svalue <> '' then
+      fFontName := svalue;
+
+    _load_int(sDrawWidth, @fDrawWidth);
+    _load_int(sDrawHeight, @fDrawHeight);
+    _load_int(sFontSize, @fFontSize);
+    _load_int(sFrontColor, @fFrontColor);
+    _load_int(sBackColor, @fBackColor);
+    _load_int(sGridWidth, @fGridWidth);
+    _load_int(sGridHeight, @fGridHeight);
+
+  finally
+    sl.Free;
+  end;
+end;
+
+procedure TFontEngine.SaveToFile(const fn: string);
+var
+  fs: TFileStream;
+begin
+  fs := TFileStream.Create(fn, fmCreate);
+  try
+    SaveToStream(fs);
+  finally
+    fs.Free;
+  end;
+end;
+
+procedure TFontEngine.LoadFromFile(const fn: string);
+var
+  fs: TFileStream;
+begin
+  fs := TFileStream.Create(fn, fmOpenRead);
+  try
+    LoadFromStream(fs);
+  finally
+    fs.Free;
+  end;
 end;
 
 end.
