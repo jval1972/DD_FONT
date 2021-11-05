@@ -2431,6 +2431,7 @@ object Form1: TForm1
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4}
         Layout = blGlyphRight
+        OnClick = BackColorSpeedButtonClick
       end
       object FrontColorSpeedButton: TSpeedButton
         Left = 46
@@ -3061,6 +3062,11 @@ object Form1: TForm1
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     Left = 265
+    Top = 144
+  end
+  object ColorDialog1: TColorDialog
+    Options = [cdFullOpen]
+    Left = 312
     Top = 144
   end
 end

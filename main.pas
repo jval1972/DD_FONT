@@ -95,6 +95,7 @@ type
     BiggerSpeedButton: TSpeedButton;
     SelectFontSpeedButton: TSpeedButton;
     FontNamesComboBox: TComboBox;
+    ColorDialog1: TColorDialog;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -124,6 +125,7 @@ type
     procedure FontNamesComboBoxClick(Sender: TObject);
     procedure SmallerSpeedButtonClick(Sender: TObject);
     procedure BiggerSpeedButtonClick(Sender: TObject);
+    procedure BackColorSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -698,6 +700,19 @@ begin
 
     needsupdate := True;
   end;
+end;
+
+procedure TForm1.BackColorSpeedButtonClick(Sender: TObject);
+begin
+  ColorDialog1.Color := ff.BackColor;
+  if ColorDialog1.Execute then
+    if ColorDialog1.Color <> ff.BackColor then
+    begin
+      undoManager.SaveUndo;
+      changed := True;
+      ff.BackColor := ColorDialog1.Color;
+      needsupdate := True;
+    end;
 end;
 
 end.
