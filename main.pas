@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  DD_FONT: Font Editor
+//  DD_FONT: Font Creator
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -386,7 +386,7 @@ begin
 end;
 
 resourcestring
-  rsTitle = 'Font Editor';
+  rsTitle = 'Font Creator';
 
 procedure TForm1.About1Click(Sender: TObject);
 begin
