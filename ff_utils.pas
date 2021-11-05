@@ -30,6 +30,9 @@ unit ff_utils;
 
 interface
 
+uses
+  Windows, SysUtils, Graphics, pngimage, jpeg;
+
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
 
 function I_VersionBuilt(fname: string = ''): string;
@@ -42,11 +45,9 @@ procedure BackupFile(const fname: string);
 
 function MkShortName(const fname: string): string;
 
-implementation
+procedure SaveImageToDisk(const b: TBitmap; const imgfname: string);
 
-uses
-  Windows,
-  SysUtils;
+implementation
 
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
 begin
@@ -148,6 +149,31 @@ begin
   Result := '...' + Result;
   for i := 3 downto 1 do
     Result := fname[i] + Result;
+end;
+
+procedure SaveImageToDisk(const b: TBitmap; const imgfname: string);
+var
+  png: TPngObject;
+  jpg: TJPEGImage;
+  ext: string;
+begin
+  ext := UpperCase(ExtractFileExt(imgfname));
+  if ext = '.PNG' then
+  begin
+    png := TPngObject.Create;
+    png.Assign(b);
+    png.SaveToFile(imgfname);
+    png.Free;
+  end
+  else if (ext = '.JPG') or (ext = '.JPEG') then
+  begin
+    jpg := TJPEGImage.Create;
+    jpg.Assign(b);
+    jpg.SaveToFile(imgfname);
+    jpg.Free;
+  end
+  else
+    b.SaveToFile(imgfname);
 end;
 
 end.

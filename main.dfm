@@ -3232,6 +3232,16 @@ object Form1: TForm1
         Hint = 'Save texture to disk'
         OnClick = SaveAs1Click
       end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object Export1: TMenuItem
+        Caption = 'Export'
+        object ExportImage1: TMenuItem
+          Caption = 'Image'
+          OnClick = ExportImage1Click
+        end
+      end
       object N1: TMenuItem
         Caption = '-'
       end
@@ -3352,5 +3362,14 @@ object Form1: TForm1
     Options = [cdFullOpen]
     Left = 312
     Top = 144
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    DefaultExt = 'png'
+    Filter = 
+      'PNG Images (*.png)|*.png|JPEG Image (*.jpg)|*.jpg|Bitmaps (*.bmp' +
+      ')|*.bmp'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
+    Left = 353
+    Top = 145
   end
 end

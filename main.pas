@@ -111,6 +111,10 @@ type
     DrawWidthPaintBox: TPaintBox;
     DrawHeightPaintBox: TPaintBox;
     WidthInfoLabel: TLabel;
+    SavePictureDialog1: TSavePictureDialog;
+    Export1: TMenuItem;
+    ExportImage1: TMenuItem;
+    N5: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -150,6 +154,7 @@ type
     procedure ZoomIn1Click(Sender: TObject);
     procedure ZoomOut1Click(Sender: TObject);
     procedure GridButton1Click(Sender: TObject);
+    procedure ExportImage1Click(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -933,6 +938,23 @@ begin
     changed := True;
     ff.DrawHeight := h;
     needsupdate := True;
+  end;
+end;
+
+procedure TForm1.ExportImage1Click(Sender: TObject);
+var
+  imgfname: string;
+begin
+  if SavePictureDialog1.Execute then
+  begin
+    Screen.Cursor := crHourglass;
+    try
+      imgfname := SavePictureDialog1.FileName;
+      BackupFile(imgfname);
+      SaveImageToDisk(buffer, imgfname);
+    finally
+      Screen.Cursor := crDefault;
+    end;
   end;
 end;
 
