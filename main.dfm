@@ -2856,6 +2856,14 @@ object Form1: TForm1
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4}
         Layout = blGlyphRight
       end
+      object FontNamesComboBox: TComboBox
+        Left = 8
+        Top = 168
+        Width = 145
+        Height = 21
+        ItemHeight = 13
+        TabOrder = 0
+      end
     end
   end
   object Panel4: TPanel

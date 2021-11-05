@@ -94,6 +94,7 @@ type
     SmallerSpeedButton: TSpeedButton;
     BiggerSpeedButton: TSpeedButton;
     SelectFontSpeedButton: TSpeedButton;
+    FontNamesComboBox: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -171,10 +172,24 @@ begin
   Result := 1;
 end;
 
+procedure CollectFonts(FontList: TStringList);
+var
+  DC: HDC;
+  LFont: TLogFont;
+  i: Integer;
+begin
+  DC := GetDC(0);
+  FillChar(LFont, sizeof(LFont), 0);
+  LFont.lfCharset := DEFAULT_CHARSET;
+  EnumFontFamiliesEx(DC, LFont, @EnumFontsProc, LPARAM(FontList), 0);
+  ReleaseDC(0, DC);
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 var
   i: integer;
   doCreate: boolean;
+  fList: TStringList;
 begin
   DoubleBuffered := True;
   for i := 0 to ComponentCount - 1 do
@@ -220,6 +235,12 @@ begin
   filemenuhistory.AddPath(bigstringtostring(@opt_filemenuhistory0));
 
   ffilename := '';
+
+  fList := TStringList.Create;
+  CollectFonts(fList);
+  for i := 0 to fList.Count -1 do
+    FontNamesComboBox.Items.Add(FList[i]);
+  fList.Free;
 
   doCreate := True;
   if ParamCount > 0 then
@@ -282,6 +303,7 @@ begin
   RedoSpeedButton1.Enabled := undoManager.CanRedo;
   if needsupdate then
   begin
+    UpdateControls;
     InvalidatePaintBox;
     needsupdate := False;
   end;
