@@ -35,6 +35,13 @@ uses
   Dialogs, ExtCtrls, ComCtrls, Buttons, Clipbrd, ExtDlgs, pngimage, xTGA, zBitmap,
   Menus, ImgList, jpeg, StdCtrls, ff_undo, ff_filemenuhistory, ff_engine;
 
+const
+  MINZOOM = 0;
+  MAXZOOM = 10;
+
+const
+  MOUSEWHEELTIMEOUT = 100; // Msecs until next mouse wheel even to be proccessed
+  
 type
   TForm1 = class(TForm)
     Panel1: TPanel;
@@ -96,6 +103,10 @@ type
     SelectFontSpeedButton: TSpeedButton;
     FontNamesComboBox: TComboBox;
     ColorDialog1: TColorDialog;
+    Label1: TLabel;
+    FontSizeLabel: TLabel;
+    ZoomInSpeedButton1: TSpeedButton;
+    ZoomOutSpeedButton1: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -128,6 +139,13 @@ type
     procedure BackColorSpeedButtonClick(Sender: TObject);
     procedure FrontColorSpeedButtonClick(Sender: TObject);
     procedure SelectFontSpeedButtonClick(Sender: TObject);
+    procedure FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure ZoomIn1Click(Sender: TObject);
+    procedure ZoomOut1Click(Sender: TObject);
+    procedure GridButton1Click(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -139,6 +157,8 @@ type
     filemenuhistory: TFileMenuHistory;
     ffilename: string;
     ff: TFontEngine;
+    zoom: integer;
+    flastzoomwheel: int64;
     procedure Idle(Sender: TObject; var Done: Boolean);
     procedure Hint(Sender: TObject);
     procedure UpdateEnable;
@@ -156,6 +176,7 @@ type
     function CheckCanClose: boolean;
     procedure SetFileName(const fname: string);
     procedure UpdateControls;
+    procedure DrawGrid;
   public
     { Public declarations }
   end;
@@ -210,6 +231,8 @@ begin
   buffer := TBitmap.Create;
   drawbuffer := TBitmap.Create;
 
+  flastzoomwheel := GetTickCount;
+
   ff := TFontEngine.Create;
 
   mousedown := False;
@@ -245,6 +268,9 @@ begin
   filemenuhistory.AddPath(bigstringtostring(@opt_filemenuhistory0));
 
   ffilename := '';
+
+  GridButton1.Down := opt_showgrid;
+  zoom := GetIntInRange(opt_zoom, MINZOOM, MAXZOOM);
 
   fList := TStringList.Create;
   CollectFonts(fList);
@@ -290,6 +316,9 @@ begin
   stringtobigstring(filemenuhistory.PathStringIdx(7), @opt_filemenuhistory7);
   stringtobigstring(filemenuhistory.PathStringIdx(8), @opt_filemenuhistory8);
   stringtobigstring(filemenuhistory.PathStringIdx(9), @opt_filemenuhistory9);
+  opt_showgrid := GridButton1.Down;
+  opt_zoom := zoom;
+
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
   filemenuhistory.Free;
@@ -311,6 +340,8 @@ begin
   Redo1.Enabled := undoManager.CanRedo;
   UndoSpeedButton1.Enabled := undoManager.CanUndo;
   RedoSpeedButton1.Enabled := undoManager.CanRedo;
+  ZoomInSpeedButton1.Enabled := zoom < MAXZOOM;
+  ZoomOutSpeedButton1.Enabled := zoom > MINZOOM;
   if needsupdate then
   begin
     UpdateControls;
@@ -358,9 +389,9 @@ end;
 procedure TForm1.InvalidatePaintBox;
 begin
   ff.DrawToBitmap(buffer);
-  PaintBox1.Width := buffer.Width;
-  PaintBox1.Height := buffer.Height;
   CreateDrawBuffer;
+  PaintBox1.Width := drawbuffer.Width;
+  PaintBox1.Height := drawbuffer.Height;
   PaintBox1.Invalidate;
 end;
 
@@ -405,10 +436,11 @@ end;
 
 procedure TForm1.CreateDrawBuffer;
 begin
-  drawbuffer.Width := buffer.Width;
-  drawbuffer.Height := buffer.Height;
+  drawbuffer.Width := Round(buffer.Width * (1 + 3 * zoom / MAXZOOM));
+  drawbuffer.Height := Round(buffer.Height * (1 + 3 * zoom / MAXZOOM));
 
-  drawbuffer.Canvas.Draw(0, 0, buffer);
+  drawbuffer.Canvas.StretchDraw(Rect(0, 0, drawbuffer.Width, drawbuffer.Height), buffer);
+  DrawGrid;
 end;
 
 procedure TForm1.Undo1Click(Sender: TObject);
@@ -574,6 +606,7 @@ begin
   UnderlineSpeedButton.Down := fsUnderline in ff.Style;
   StrikeOutSpeedButton.Down := fsStrikeOut in ff.Style;
   FontNamesComboBox.ItemIndex := FontNamesComboBox.Items.IndexOf(ff.FontName);
+  FontSizeLabel.Caption := IntToStr(ff.FontSize);
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
@@ -739,6 +772,97 @@ begin
     changed := True;
     ff.FromFont(FontDialog1.Font);
     needsupdate := True;
+  end;
+end;
+
+procedure TForm1.FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
+  MousePos: TPoint; var Handled: Boolean);
+var
+  pt: TPoint;
+  r: TRect;
+  tick: int64;
+begin
+  tick := GetTickCount;
+  if tick <= flastzoomwheel + MOUSEWHEELTIMEOUT then
+    Exit;
+  flastzoomwheel := tick;
+  pt := PaintBox1.Parent.ScreenToClient(MousePos);
+  r := PaintBox1.ClientRect;
+  if r.Right > ScrollBox1.Width then
+    r.Right := ScrollBox1.Width;
+  if r.Bottom > ScrollBox1.Height then
+    r.Bottom := ScrollBox1.Height;
+  if PtInRect(r, pt) then
+    ZoomOut1Click(Sender);
+end;
+
+procedure TForm1.FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
+  MousePos: TPoint; var Handled: Boolean);
+var
+  pt: TPoint;
+  r: TRect;
+  tick: int64;
+begin
+  tick := GetTickCount;
+  if tick <= flastzoomwheel + MOUSEWHEELTIMEOUT then
+    Exit;
+  flastzoomwheel := tick;
+  pt := PaintBox1.Parent.ScreenToClient(MousePos);
+  r := PaintBox1.ClientRect;
+  if r.Right > ScrollBox1.Width then
+    r.Right := ScrollBox1.Width;
+  if r.Bottom > ScrollBox1.Height then
+    r.Bottom := ScrollBox1.Height;
+  if PtInRect(r, pt) then
+    ZoomIn1Click(Sender);
+end;
+
+procedure TForm1.ZoomIn1Click(Sender: TObject);
+begin
+  if zoom < MAXZOOM then
+  begin
+    inc(zoom);
+    needsupdate := True;
+  end;
+end;
+
+procedure TForm1.ZoomOut1Click(Sender: TObject);
+begin
+  if zoom > MINZOOM then
+  begin
+    dec(zoom);
+    needsupdate := True;
+  end;
+end;
+
+procedure TForm1.GridButton1Click(Sender: TObject);
+begin
+  InvalidatePaintBox;
+end;
+
+procedure TForm1.DrawGrid;
+var
+  x, y: integer;
+  stepw, steph: double;
+begin
+  if GridButton1.Down then
+  begin
+    drawbuffer.Canvas.Pen.Style := psSolid;
+    drawbuffer.Canvas.Pen.Color := RGB(160, 160, 128);
+    stepw := drawbuffer.Width / ff.GridWidth;
+
+    for x := 1 to ff.GridWidth - 1 do
+    begin
+      drawbuffer.Canvas.MoveTo(Round(x * stepw) - 1, 0);
+      drawbuffer.Canvas.LineTo(Round(x * stepw) - 1, drawbuffer.Height);
+    end;
+
+    steph := drawbuffer.Height / ff.GridHeight;
+    for y := 1 to ff.GridHeight - 1 do
+    begin
+      drawbuffer.Canvas.MoveTo(0, Round(y * steph) - 1);
+      drawbuffer.Canvas.LineTo(drawbuffer.Width, Round(y * steph) - 1);
+    end;
   end;
 end;
 
