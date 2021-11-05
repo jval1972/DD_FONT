@@ -94,7 +94,7 @@ begin
   fPitch := fpDefault;
   fStyle := [];
   fCharset := DEFAULT_CHARSET;
-  fFontName := 'Tahoma';
+  fFontName := 'Doom';
   fDrawWidth := 16;
   fDrawHeight := 16;
   fFontSize := 8;
