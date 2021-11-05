@@ -127,6 +127,7 @@ type
     procedure BiggerSpeedButtonClick(Sender: TObject);
     procedure BackColorSpeedButtonClick(Sender: TObject);
     procedure FrontColorSpeedButtonClick(Sender: TObject);
+    procedure SelectFontSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -727,6 +728,18 @@ begin
       ff.FrontColor := ColorDialog1.Color;
       needsupdate := True;
     end;
+end;
+
+procedure TForm1.SelectFontSpeedButtonClick(Sender: TObject);
+begin
+  ff.ToFont(FontDialog1.Font);
+  if FontDialog1.Execute then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.FromFont(FontDialog1.Font);
+    needsupdate := True;
+  end;
 end;
 
 end.
