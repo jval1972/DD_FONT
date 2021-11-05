@@ -453,6 +453,7 @@ begin
   PaintBox1.Width := drawbuffer.Width;
   PaintBox1.Height := drawbuffer.Height;
   PaintBox1.Invalidate;
+  ScrollBox1.Invalidate;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
