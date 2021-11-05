@@ -1993,6 +1993,7 @@ object Form1: TForm1
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4}
         Layout = blGlyphRight
+        OnClick = BoldSpeedButtonClick
       end
       object ItalicSpeedButton: TSpeedButton
         Left = 42
