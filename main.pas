@@ -564,6 +564,7 @@ begin
   ItalicSpeedButton.Down := fsItalic in ff.Style;
   UnderlineSpeedButton.Down := fsUnderline in ff.Style;
   StrikeOutSpeedButton.Down := fsStrikeOut in ff.Style;
+  FontNamesComboBox.ItemIndex := FontNamesComboBox.Items.IndexOf(ff.FontName);
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
