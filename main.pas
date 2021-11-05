@@ -126,6 +126,7 @@ type
     procedure SmallerSpeedButtonClick(Sender: TObject);
     procedure BiggerSpeedButtonClick(Sender: TObject);
     procedure BackColorSpeedButtonClick(Sender: TObject);
+    procedure FrontColorSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -711,6 +712,19 @@ begin
       undoManager.SaveUndo;
       changed := True;
       ff.BackColor := ColorDialog1.Color;
+      needsupdate := True;
+    end;
+end;
+
+procedure TForm1.FrontColorSpeedButtonClick(Sender: TObject);
+begin
+  ColorDialog1.Color := ff.FrontColor;
+  if ColorDialog1.Execute then
+    if ColorDialog1.Color <> ff.FrontColor then
+    begin
+      undoManager.SaveUndo;
+      changed := True;
+      ff.FrontColor := ColorDialog1.Color;
       needsupdate := True;
     end;
 end;

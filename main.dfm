@@ -2539,6 +2539,7 @@ object Form1: TForm1
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4}
         Layout = blGlyphRight
+        OnClick = FrontColorSpeedButtonClick
       end
       object SmallerSpeedButton: TSpeedButton
         Left = 6
