@@ -951,6 +951,7 @@ begin
     try
       imgfname := SavePictureDialog1.FileName;
       BackupFile(imgfname);
+      ff.DrawToBitmap(buffer);  // Get fresh copy
       SaveImageToDisk(buffer, imgfname);
     finally
       Screen.Cursor := crDefault;
