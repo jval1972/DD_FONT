@@ -51,6 +51,7 @@ type
   public
     constructor Create; virtual;
     destructor Destroy; override;
+    procedure Reset;
     procedure DrawToCanvas(const C: TCanvas);
     procedure DrawToBitmap(const bm: TBitmap);
     procedure FromFont(const fnt: TFont);
@@ -79,6 +80,16 @@ implementation
 constructor TFontEngine.Create;
 begin
   inherited Create;
+  Reset;
+end;
+
+destructor TFontEngine.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TFontEngine.Reset;
+begin
   fHeight := -11;
   fPitch := fpDefault;
   fStyle := [];
@@ -91,11 +102,6 @@ begin
   fBackColor := RGB(0, 0, 0);
   fGridWidth := 16;
   fGridHeight := 16;
-end;
-
-destructor TFontEngine.Destroy;
-begin
-  inherited Destroy;
 end;
 
 procedure TFontEngine.DrawToCanvas(const C: TCanvas);

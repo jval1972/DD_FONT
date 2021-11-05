@@ -167,7 +167,7 @@ type
     DrawHeightSlider: TSliderHook;
     procedure Idle(Sender: TObject; var Done: Boolean);
     procedure Hint(Sender: TObject);
-    procedure UpdateEnable;
+    procedure UpdateEnable(const force: Boolean = False);
     procedure InvalidatePaintBox;
     procedure PaintBox1Responer(const X, Y: Integer);
     procedure CreateDrawBuffer;
@@ -494,6 +494,8 @@ procedure TForm1.DoCreateNew;
 begin
   undoManager.Clear;
   SetFileName('');
+  ff.Reset;
+  needsupdate := True;
   changed := False;
 end;
 
