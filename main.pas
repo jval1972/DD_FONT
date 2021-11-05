@@ -85,6 +85,15 @@ type
     UndoSpeedButton1: TSpeedButton;
     RedoSpeedButton1: TSpeedButton;
     FontDialog1: TFontDialog;
+    BoldSpeedButton: TSpeedButton;
+    ItalicSpeedButton: TSpeedButton;
+    UnderlineSpeedButton: TSpeedButton;
+    StrikeOutSpeedButton: TSpeedButton;
+    BackColorSpeedButton: TSpeedButton;
+    FrontColorSpeedButton: TSpeedButton;
+    SmallerSpeedButton: TSpeedButton;
+    BiggerSpeedButton: TSpeedButton;
+    SelectFontSpeedButton: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -528,7 +537,10 @@ end;
 
 procedure TForm1.UpdateControls;
 begin
-
+  BoldSpeedButton.Down := fsBold in ff.Style;
+  ItalicSpeedButton := fsItalic in ff.Style;
+  UnderlineSpeedButton := fsUnderline in ff.Style;
+  StrikeOutSpeedButton := fsStrikeOut in ff.Style;
 end;
 
 end.
