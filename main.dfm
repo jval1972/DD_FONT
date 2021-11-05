@@ -3128,6 +3128,18 @@ object Form1: TForm1
         Height = 13
         Caption = '8'
       end
+      object DrawWidthPaintBox: TPaintBox
+        Left = 8
+        Top = 208
+        Width = 120
+        Height = 24
+      end
+      object DrawHeightPaintBox: TPaintBox
+        Left = 8
+        Top = 240
+        Width = 120
+        Height = 24
+      end
       object FontNamesComboBox: TComboBox
         Left = 8
         Top = 168
@@ -3179,8 +3191,15 @@ object Form1: TForm1
       Width = 984
       Height = 24
       Align = alTop
-      Caption = 'Screen'
+      Caption = ' '
       TabOrder = 1
+      object WidthInfoLabel: TLabel
+        Left = 16
+        Top = 6
+        Width = 12
+        Height = 13
+        Caption = '---'
+      end
     end
   end
   object MainMenu1: TMainMenu

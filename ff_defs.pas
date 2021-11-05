@@ -57,6 +57,8 @@ var
   opt_filemenuhistory9: bigstring_t;
   opt_showgrid: boolean = False;
   opt_zoom: integer = 0;
+  opt_DrawWidth: integer = 16;
+  opt_DrawHeight: integer = 16;
 
 function bigstringtostring(const bs: bigstring_p): string;
 
@@ -77,7 +79,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 14;
+  NUMSETTINGS = 16;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -150,6 +152,16 @@ var
       desc: 'ZOOM';
       typeof: tstInteger;
       location: @opt_zoom;
+    ),
+    (
+      desc: 'DRAWWIDTH';
+      typeof: tstInteger;
+      location: @opt_DrawWidth;
+    ),
+    (
+      desc: 'DRAWHEIGHT';
+      typeof: tstInteger;
+      location: @opt_DrawHeight;
     )
   );
 

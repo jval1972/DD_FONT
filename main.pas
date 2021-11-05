@@ -32,8 +32,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ComCtrls, Buttons, Clipbrd, ExtDlgs, pngimage, xTGA, zBitmap,
-  Menus, ImgList, jpeg, StdCtrls, ff_undo, ff_filemenuhistory, ff_engine;
+  Dialogs, ExtCtrls, ComCtrls, Buttons, Clipbrd, ExtDlgs, Menus, ImgList, jpeg,
+  StdCtrls, pngimage, xTGA, zBitmap, ff_undo, ff_filemenuhistory, ff_engine,
+  ff_slider;
 
 const
   MINZOOM = 0;
@@ -107,6 +108,9 @@ type
     FontSizeLabel: TLabel;
     ZoomInSpeedButton1: TSpeedButton;
     ZoomOutSpeedButton1: TSpeedButton;
+    DrawWidthPaintBox: TPaintBox;
+    DrawHeightPaintBox: TPaintBox;
+    WidthInfoLabel: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -159,6 +163,8 @@ type
     ff: TFontEngine;
     zoom: integer;
     flastzoomwheel: int64;
+    DrawWidthSlider: TSliderHook;
+    DrawHeightSlider: TSliderHook;
     procedure Idle(Sender: TObject; var Done: Boolean);
     procedure Hint(Sender: TObject);
     procedure UpdateEnable;
@@ -177,6 +183,8 @@ type
     procedure SetFileName(const fname: string);
     procedure UpdateControls;
     procedure DrawGrid;
+    procedure OnDrawWidthChange(Sender: TObject);
+    procedure OnDrawHeightChange(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -235,6 +243,20 @@ begin
 
   ff := TFontEngine.Create;
 
+  DrawWidthSlider := TSliderHook.Create(DrawWidthPaintBox);
+  DrawWidthSlider.Min := 5.0;
+  DrawWidthSlider.Max := 25.0;
+  DrawWidthSlider.Step := 1.0;
+  DrawWidthSlider.PageStep := 5.0;
+  DrawWidthSlider.OnSliderHookChange := OnDrawWidthChange;
+
+  DrawHeightSlider := TSliderHook.Create(DrawHeightPaintBox);
+  DrawHeightSlider.Min := 5.0;
+  DrawHeightSlider.Max := 25.0;
+  DrawHeightSlider.Step := 1.0;
+  DrawHeightSlider.PageStep := 5.0;
+  DrawHeightSlider.OnSliderHookChange := OnDrawHeightChange;
+
   mousedown := False;
 
   ff_LoadSettingFromFile(ChangeFileExt(ParamStr(0), '.ini'));
@@ -271,6 +293,9 @@ begin
 
   GridButton1.Down := opt_showgrid;
   zoom := GetIntInRange(opt_zoom, MINZOOM, MAXZOOM);
+
+  DrawWidthSlider.Position := opt_DrawWidth;
+  DrawHeightSlider.Position := opt_DrawHeight;
 
   fList := TStringList.Create;
   CollectFonts(fList);
@@ -318,6 +343,8 @@ begin
   stringtobigstring(filemenuhistory.PathStringIdx(9), @opt_filemenuhistory9);
   opt_showgrid := GridButton1.Down;
   opt_zoom := zoom;
+  opt_DrawWidth := Round(DrawWidthSlider.Position);
+  opt_DrawHeight := Round(DrawHeightSlider.Position);
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
@@ -325,6 +352,9 @@ begin
 
   buffer.Free;
   drawbuffer.Free;
+
+  DrawWidthSlider.Free;
+  DrawHeightSlider.Free;
 
   ff.Free;
 end;
@@ -607,6 +637,16 @@ begin
   StrikeOutSpeedButton.Down := fsStrikeOut in ff.Style;
   FontNamesComboBox.ItemIndex := FontNamesComboBox.Items.IndexOf(ff.FontName);
   FontSizeLabel.Caption := IntToStr(ff.FontSize);
+  WidthInfoLabel.Caption := Format('Image Size: %dx%d   Character Size: %dx%d',
+    [
+      ff.GridWidth * ff.DrawWidth,
+      ff.GridHeight * ff.DrawHeight,
+      ff.DrawWidth,
+      ff.DrawHeight
+      ]
+    );
+  DrawWidthSlider.Position := ff.DrawWidth;
+  DrawHeightSlider.Position := ff.DrawHeight;
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
@@ -863,6 +903,34 @@ begin
       drawbuffer.Canvas.MoveTo(0, Round(y * steph) - 1);
       drawbuffer.Canvas.LineTo(drawbuffer.Width, Round(y * steph) - 1);
     end;
+  end;
+end;
+
+procedure TForm1.OnDrawWidthChange(Sender: TObject);
+var
+  w: integer;
+begin
+  w := Round(DrawWidthSlider.Position);
+  if w <> ff.DrawWidth then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.DrawWidth := w;
+    needsupdate := True;
+  end;
+end;
+
+procedure TForm1.OnDrawHeightChange(Sender: TObject);
+var
+  h: integer;
+begin
+  h := Round(DrawHeightSlider.Position);
+  if h <> ff.DrawHeight then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.DrawHeight := h;
+    needsupdate := True;
   end;
 end;
 

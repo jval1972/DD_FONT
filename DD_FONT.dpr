@@ -44,7 +44,8 @@ uses
   ff_filemenuhistory in 'ff_filemenuhistory.pas',
   ff_undo in 'ff_undo.pas',
   ff_defs in 'ff_defs.pas',
-  ff_engine in 'ff_engine.pas';
+  ff_engine in 'ff_engine.pas',
+  ff_slider in 'ff_slider.pas';
 
 {$R *.res}
 
