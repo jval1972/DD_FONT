@@ -2867,6 +2867,7 @@ object Form1: TForm1
         Height = 21
         ItemHeight = 13
         TabOrder = 0
+        OnClick = FontNamesComboBoxClick
       end
     end
   end

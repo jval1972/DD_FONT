@@ -121,6 +121,7 @@ type
     procedure ItalicSpeedButtonClick(Sender: TObject);
     procedure UnderlineSpeedButtonClick(Sender: TObject);
     procedure StrikeOutSpeedButtonClick(Sender: TObject);
+    procedure FontNamesComboBoxClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -619,6 +620,15 @@ begin
     Exclude(stl, fsStrikeOut);
   ff.Style := stl;
   needsupdate := True;
+end;
+
+procedure TForm1.FontNamesComboBoxClick(Sender: TObject);
+begin
+  if FontNamesComboBox.Items.IndexOf(FontNamesComboBox.Text) >= 0 then
+  begin
+    ff.FontName := FontNamesComboBox.Text;
+    needsupdate := True;
+  end;
 end;
 
 end.
