@@ -257,8 +257,6 @@ begin
   Redo1.Enabled := undoManager.CanRedo;
   UndoSpeedButton1.Enabled := undoManager.CanUndo;
   RedoSpeedButton1.Enabled := undoManager.CanRedo;
-  Paste1.Enabled := Clipboard.HasFormat(CF_BITMAP);
-  PasteSpeedButton1.Enabled := Clipboard.HasFormat(CF_BITMAP);
   if needsupdate then
   begin
     InvalidatePaintBox;
@@ -319,7 +317,6 @@ end;
 
 procedure TForm1.Edit1Click(Sender: TObject);
 begin
-  Paste1.Enabled := Clipboard.HasFormat(CF_BITMAP);
   Undo1.Enabled := undoManager.CanUndo;
   Redo1.Enabled := undoManager.CanRedo;
 end;
