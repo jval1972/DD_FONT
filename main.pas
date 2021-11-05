@@ -45,9 +45,9 @@ const
   
 type
   TForm1 = class(TForm)
-    Panel1: TPanel;
+    TopToolbarPanel: TPanel;
     StatusBar1: TStatusBar;
-    Panel2: TPanel;
+    LeftToolbarPanel: TPanel;
     OpenSpeedButton1: TSpeedButton;
     SaveSpeedButton1: TSpeedButton;
     CopySpeedButton1: TSpeedButton;
@@ -63,7 +63,6 @@ type
     N2: TMenuItem;
     Help1: TMenuItem;
     About1: TMenuItem;
-    ToolPanel: TPanel;
     Timer1: TTimer;
     Panel4: TPanel;
     ScrollBox1: TScrollBox;
@@ -92,6 +91,19 @@ type
     UndoSpeedButton1: TSpeedButton;
     RedoSpeedButton1: TSpeedButton;
     FontDialog1: TFontDialog;
+    ColorDialog1: TColorDialog;
+    ZoomInSpeedButton1: TSpeedButton;
+    ZoomOutSpeedButton1: TSpeedButton;
+    WidthInfoLabel: TLabel;
+    SavePictureDialog1: TSavePictureDialog;
+    Export1: TMenuItem;
+    ExportImage1: TMenuItem;
+    N5: TMenuItem;
+    Tools1: TMenuItem;
+    Openexternalfont1: TMenuItem;
+    OpenDialog2: TOpenDialog;
+    Panel5: TPanel;
+    ToolPanel: TPanel;
     BoldSpeedButton: TSpeedButton;
     ItalicSpeedButton: TSpeedButton;
     UnderlineSpeedButton: TSpeedButton;
@@ -101,25 +113,15 @@ type
     SmallerSpeedButton: TSpeedButton;
     BiggerSpeedButton: TSpeedButton;
     SelectFontSpeedButton: TSpeedButton;
-    FontNamesComboBox: TComboBox;
-    ColorDialog1: TColorDialog;
     Label1: TLabel;
     FontSizeLabel: TLabel;
-    ZoomInSpeedButton1: TSpeedButton;
-    ZoomOutSpeedButton1: TSpeedButton;
-    WidthInfoLabel: TLabel;
-    SavePictureDialog1: TSavePictureDialog;
-    Export1: TMenuItem;
-    ExportImage1: TMenuItem;
-    N5: TMenuItem;
+    FontNamesComboBox: TComboBox;
     GroupBox1: TGroupBox;
     DrawHeightPaintBox: TPaintBox;
     DrawWidthPaintBox: TPaintBox;
     CharWidthLabel: TLabel;
     CharHeightLabel: TLabel;
-    ools1: TMenuItem;
-    Openexternalfont1: TMenuItem;
-    OpenDialog2: TOpenDialog;
+    Label2: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

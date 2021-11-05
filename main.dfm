@@ -5,6 +5,8 @@ object Form1: TForm1
   Height = 692
   Caption = 'Doom Font Creator'
   Color = clBtnFace
+  Constraints.MinHeight = 600
+  Constraints.MinWidth = 800
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -1053,7 +1055,7 @@ object Form1: TForm1
   OnMouseWheelUp = FormMouseWheelUp
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
+  object TopToolbarPanel: TPanel
     Left = 0
     Top = 0
     Width = 1152
@@ -2118,7 +2120,7 @@ object Form1: TForm1
         Width = 200
       end>
   end
-  object Panel2: TPanel
+  object LeftToolbarPanel: TPanel
     Left = 0
     Top = 61
     Width = 168
@@ -2127,13 +2129,22 @@ object Form1: TForm1
     Caption = ' '
     Color = 16579836
     TabOrder = 2
+    object Panel5: TPanel
+      Left = 1
+      Top = 1
+      Width = 166
+      Height = 24
+      Align = alTop
+      Caption = 'Font Parameters'
+      TabOrder = 0
+    end
     object ToolPanel: TPanel
       Left = 3
-      Top = 8
+      Top = 28
       Width = 158
       Height = 481
       Caption = ' '
-      TabOrder = 0
+      TabOrder = 1
       object BoldSpeedButton: TSpeedButton
         Left = 6
         Top = 4
@@ -3139,9 +3150,17 @@ object Form1: TForm1
         Height = 13
         Caption = '8'
       end
+      object Label2: TLabel
+        Left = 8
+        Top = 176
+        Width = 29
+        Height = 13
+        Caption = 'Font: '
+        FocusControl = FontNamesComboBox
+      end
       object FontNamesComboBox: TComboBox
         Left = 8
-        Top = 168
+        Top = 192
         Width = 145
         Height = 21
         Hint = 'Font'
@@ -3151,7 +3170,7 @@ object Form1: TForm1
       end
       object GroupBox1: TGroupBox
         Left = 8
-        Top = 200
+        Top = 224
         Width = 145
         Height = 137
         Caption = ' Character Rect Size '
@@ -3353,7 +3372,7 @@ object Form1: TForm1
         Caption = '-'
       end
     end
-    object ools1: TMenuItem
+    object Tools1: TMenuItem
       Caption = 'Tools'
       Hint = 'Tools'
       object Openexternalfont1: TMenuItem
