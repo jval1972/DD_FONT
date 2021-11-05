@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  ENDEDIT: An ENDTEXT Editor
+//  DD_FONT: Font Editor
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -23,16 +23,16 @@
 //
 //------------------------------------------------------------------------------
 //  E-Mail: jimmyvalavanis@yahoo.gr
-//  Site  : https://sourceforge.net/projects/endedit/
+//  Site  : https://sourceforge.net/projects/dd-font/
 //------------------------------------------------------------------------------
 
-unit ee_defs;
+unit ff_defs;
 
 interface
 
-function ee_LoadSettingFromFile(const fn: string): boolean;
+function ff_LoadSettingFromFile(const fn: string): boolean;
 
-procedure ee_SaveSettingsToFile(const fn: string);
+procedure ff_SaveSettingsToFile(const fn: string);
 
 const
   MAXHISTORYPATH = 2048;
@@ -194,7 +194,7 @@ begin
   end;
 end;
 
-procedure ee_SaveSettingsToFile(const fn: string);
+procedure ff_SaveSettingsToFile(const fn: string);
 var
   s: TStringList;
   i: integer;
@@ -224,7 +224,7 @@ begin
   end;
 end;
 
-function ee_LoadSettingFromFile(const fn: string): boolean;
+function ff_LoadSettingFromFile(const fn: string): boolean;
 var
   s: TStringList;
   i, j: integer;

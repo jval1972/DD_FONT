@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  ENDEDIT: An ENDTEXT Editor
+//  DD_FONT: Font Editor
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -23,10 +23,10 @@
 //
 //------------------------------------------------------------------------------
 //  E-Mail: jimmyvalavanis@yahoo.gr
-//  Site  : https://sourceforge.net/projects/endedit/
+//  Site  : https://sourceforge.net/projects/dd-font/
 //------------------------------------------------------------------------------
 
-unit ee_filemenuhistory;
+unit ff_filemenuhistory;
 
 interface
 
@@ -85,7 +85,7 @@ type
 implementation
 
 uses
-  ee_utils;
+  ff_utils;
 
 resourceString
   rsRangeCheckError = 'Index out of range.';
@@ -267,4 +267,3 @@ begin
 end;
 
 end.
-

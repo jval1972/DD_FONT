@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  ENDEDIT: An ENDTEXT Editor
+//  DD_FONT: Font Editor
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -23,10 +23,10 @@
 //
 //------------------------------------------------------------------------------
 //  E-Mail: jimmyvalavanis@yahoo.gr
-//  Site  : https://sourceforge.net/projects/endedit/
+//  Site  : https://sourceforge.net/projects/dd-font/
 //------------------------------------------------------------------------------
 
-program ENDEDIT;
+program DD_FONT;
 
 uses
   FastMM4 in 'FastMM4.pas',
@@ -39,17 +39,17 @@ uses
   xTGA in 'xTGA.pas',
   zBitmap in 'zBitmap.pas',
   zlibpas in 'zlibpas.pas',
-  ee_utils in 'ee_utils.pas',
-  ee_binary in 'ee_binary.pas',
-  ee_filemenuhistory in 'ee_filemenuhistory.pas',
-  ee_undo in 'ee_undo.pas',
-  ee_defs in 'ee_defs.pas';
+  ff_utils in 'ff_utils.pas',
+  ff_binary in 'ff_binary.pas',
+  ff_filemenuhistory in 'ff_filemenuhistory.pas',
+  ff_undo in 'ff_undo.pas',
+  ff_defs in 'ff_defs.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.Title := 'ENDTEXT Editor';
+  Application.Title := 'Font Editor';
   Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.

@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 48
   Width = 1168
   Height = 692
-  Caption = 'ENDTEXT Editor'
+  Caption = 'Font Editor'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -2317,6 +2317,15 @@ object Form1: TForm1
   object SaveDialog1: TSaveDialog
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
     Left = 217
+    Top = 144
+  end
+  object FontDialog1: TFontDialog
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    Left = 265
     Top = 144
   end
 end

@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  ENDEDIT: An EDNTEXT Editor
+//  DD_FONT: Font Editor
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -23,7 +23,7 @@
 //
 //------------------------------------------------------------------------------
 //  E-Mail: jimmyvalavanis@yahoo.gr
-//  Site  : https://sourceforge.net/projects/endedit/
+//  Site  : https://sourceforge.net/projects/dd-font/
 //------------------------------------------------------------------------------
 
 unit main;
@@ -33,7 +33,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ComCtrls, Buttons, Clipbrd, ExtDlgs, pngimage, xTGA, zBitmap,
-  Menus, ImgList, jpeg, StdCtrls, ee_undo, ee_filemenuhistory;
+  Menus, ImgList, jpeg, StdCtrls, ff_undo, ff_filemenuhistory;
 
 type
   TForm1 = class(TForm)
@@ -86,6 +86,7 @@ type
     NewSpeedButton1: TSpeedButton;
     UndoSpeedButton1: TSpeedButton;
     RedoSpeedButton1: TSpeedButton;
+    FontDialog1: TFontDialog;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -147,7 +148,7 @@ implementation
 {$R *.dfm}
 
 uses
-  ee_utils, ee_defs;
+  ff_utils, ff_defs;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
@@ -165,7 +166,7 @@ begin
 
   mousedown := False;
 
-  ee_LoadSettingFromFile(ChangeFileExt(ParamStr(0), '.ini'));
+  ff_LoadSettingFromFile(ChangeFileExt(ParamStr(0), '.ini'));
 
   undoManager := TUndoRedoManager.Create;
   undoManager.OnLoadFromStream := DoLoadUndo;
@@ -235,7 +236,7 @@ begin
   stringtobigstring(filemenuhistory.PathStringIdx(7), @opt_filemenuhistory7);
   stringtobigstring(filemenuhistory.PathStringIdx(8), @opt_filemenuhistory8);
   stringtobigstring(filemenuhistory.PathStringIdx(9), @opt_filemenuhistory9);
-  ee_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
+  ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
   filemenuhistory.Free;
 
@@ -278,13 +279,13 @@ begin
 end;
 
 resourcestring
-  rsTitle = 'ENDTEXT Editor';
+  rsTitle = 'Font Editor';
 
 procedure TForm1.About1Click(Sender: TObject);
 begin
   MessageBox(
     Handle,
-    PChar(Format('%s'#13#10'Version %s'#13#10#13#10'A tool for creating ENDTEXT screens.'#13#10'© 2021, jvalavanis@gmail.com', [rsTitle, I_VersionBuilt])),
+    PChar(Format('%s'#13#10'Version %s'#13#10#13#10'A tool for creating font images.'#13#10'© 2021, jvalavanis@gmail.com', [rsTitle, I_VersionBuilt])),
     PChar(rsTitle),
     MB_OK or MB_ICONINFORMATION or MB_APPLMODAL);
 end;

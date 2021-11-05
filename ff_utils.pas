@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 //
-//  ENDEDIT: An ENDTEXT Editor
+//  DD_FONT: Font Editor
 //  Copyright (C) 2021 by Jim Valavanis
 //
 //  This program is free software; you can redistribute it and/or
@@ -23,10 +23,10 @@
 //
 //------------------------------------------------------------------------------
 //  E-Mail: jimmyvalavanis@yahoo.gr
-//  Site  : https://sourceforge.net/projects/endedit/
+//  Site  : https://sourceforge.net/projects/dd-font/
 //------------------------------------------------------------------------------
 
-unit ee_utils;
+unit ff_utils;
 
 interface
 
