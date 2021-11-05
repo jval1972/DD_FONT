@@ -143,7 +143,7 @@ begin
 
   ch := #0;
   for gy := 0 to fGridHeight - 1 do
-    for gx := 0 to fGridWidth do
+    for gx := 0 to fGridWidth - 1 do
     begin
       lC.FillRect(Rect(0, 0, fDrawWidth, fDrawHeight));
       lC.TextOut(0, 0, ch);
