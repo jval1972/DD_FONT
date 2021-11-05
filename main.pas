@@ -134,6 +134,7 @@ type
     procedure OnLoadFileMenuHistory(Sender: TObject; const aname: string);
     function CheckCanClose: boolean;
     procedure SetFileName(const fname: string);
+    procedure UpdateControls;
   public
     { Public declarations }
   end;
@@ -147,6 +148,19 @@ implementation
 
 uses
   ff_utils, ff_defs;
+
+function EnumFontsProc(var LogFont: TLogFont; var TextMetric: TTextMetric;
+  FontType: Integer; Data: Pointer): Integer; stdcall;
+var
+  S: TStrings;
+  Temp: string;
+begin
+  S := TStrings(Data);
+  Temp := LogFont.lfFaceName;
+  if (S.Count = 0) or (AnsiCompareText(S[S.Count - 1], Temp) <> 0) then
+    S.Add(Temp);
+  Result := 1;
+end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
@@ -510,6 +524,11 @@ procedure TForm1.SaveAs1Click(Sender: TObject);
 begin
   if SaveDialog1.Execute then
     DoSaveToFile(SaveDialog1.FileName);
+end;
+
+procedure TForm1.UpdateControls;
+begin
+
 end;
 
 end.

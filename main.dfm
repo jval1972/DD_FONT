@@ -1741,7 +1741,7 @@ object Form1: TForm1
       Width = 65
       Height = 65
       Hint = 'Redo last undo action'
-      Caption = 'Undo'
+      Caption = 'Redo'
       Flat = True
       Glyph.Data = {
         B60D0000424DB60D000000000000360000002800000030000000180000000100
