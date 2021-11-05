@@ -179,7 +179,6 @@ procedure CollectFonts(FontList: TStringList);
 var
   DC: HDC;
   LFont: TLogFont;
-  i: Integer;
 begin
   DC := GetDC(0);
   FillChar(LFont, sizeof(LFont), 0);
