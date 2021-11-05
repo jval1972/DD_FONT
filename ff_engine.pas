@@ -141,7 +141,7 @@ begin
     begin
       lC.FillRect(Rect(0, 0, fDrawWidth, fDrawHeight));
       lC.TextOut(0, 0, ch);
-      bC.Draw(gx * fGridWidth, gy * fGridHeight, letter);
+      bC.Draw(gx * fDrawWidth, gy * fDrawHeight, letter);
       Inc(ch);
     end;
 
