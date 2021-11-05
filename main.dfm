@@ -2131,7 +2131,7 @@ object Form1: TForm1
       Left = 3
       Top = 8
       Width = 158
-      Height = 305
+      Height = 481
       Caption = ' '
       TabOrder = 0
       object BoldSpeedButton: TSpeedButton
@@ -3128,18 +3128,6 @@ object Form1: TForm1
         Height = 13
         Caption = '8'
       end
-      object DrawWidthPaintBox: TPaintBox
-        Left = 8
-        Top = 208
-        Width = 120
-        Height = 24
-      end
-      object DrawHeightPaintBox: TPaintBox
-        Left = 8
-        Top = 240
-        Width = 120
-        Height = 24
-      end
       object FontNamesComboBox: TComboBox
         Left = 8
         Top = 168
@@ -3148,6 +3136,40 @@ object Form1: TForm1
         ItemHeight = 13
         TabOrder = 0
         OnClick = FontNamesComboBoxClick
+      end
+      object GroupBox1: TGroupBox
+        Left = 8
+        Top = 200
+        Width = 145
+        Height = 137
+        Caption = ' Character Rect Size '
+        TabOrder = 1
+        object DrawHeightPaintBox: TPaintBox
+          Left = 8
+          Top = 88
+          Width = 128
+          Height = 24
+        end
+        object DrawWidthPaintBox: TPaintBox
+          Left = 8
+          Top = 40
+          Width = 128
+          Height = 24
+        end
+        object CharWidthLabel: TLabel
+          Left = 8
+          Top = 24
+          Width = 76
+          Height = 13
+          Caption = 'CharWidthLabel'
+        end
+        object CharHeightLabel: TLabel
+          Left = 8
+          Top = 72
+          Width = 79
+          Height = 13
+          Caption = 'CharHeightLabel'
+        end
       end
     end
   end

@@ -108,13 +108,16 @@ type
     FontSizeLabel: TLabel;
     ZoomInSpeedButton1: TSpeedButton;
     ZoomOutSpeedButton1: TSpeedButton;
-    DrawWidthPaintBox: TPaintBox;
-    DrawHeightPaintBox: TPaintBox;
     WidthInfoLabel: TLabel;
     SavePictureDialog1: TSavePictureDialog;
     Export1: TMenuItem;
     ExportImage1: TMenuItem;
     N5: TMenuItem;
+    GroupBox1: TGroupBox;
+    DrawHeightPaintBox: TPaintBox;
+    DrawWidthPaintBox: TPaintBox;
+    CharWidthLabel: TLabel;
+    CharHeightLabel: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -250,14 +253,14 @@ begin
 
   DrawWidthSlider := TSliderHook.Create(DrawWidthPaintBox);
   DrawWidthSlider.Min := 5.0;
-  DrawWidthSlider.Max := 25.0;
+  DrawWidthSlider.Max := 32.0;
   DrawWidthSlider.Step := 1.0;
   DrawWidthSlider.PageStep := 5.0;
   DrawWidthSlider.OnSliderHookChange := OnDrawWidthChange;
 
   DrawHeightSlider := TSliderHook.Create(DrawHeightPaintBox);
   DrawHeightSlider.Min := 5.0;
-  DrawHeightSlider.Max := 25.0;
+  DrawHeightSlider.Max := 32.0;
   DrawHeightSlider.Step := 1.0;
   DrawHeightSlider.PageStep := 5.0;
   DrawHeightSlider.OnSliderHookChange := OnDrawHeightChange;
@@ -653,7 +656,9 @@ begin
       ]
     );
   DrawWidthSlider.Position := ff.DrawWidth;
+  CharWidthLabel.Caption := Format('Rect Width: %d', [ff.DrawWidth]);
   DrawHeightSlider.Position := ff.DrawHeight;
+  CharHeightLabel.Caption := Format('Rect Height: %d', [ff.DrawHeight]);
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
@@ -744,7 +749,7 @@ end;
 
 const
   MINFONTSIZE = 4;
-  MAXFONTSIZE = 96;
+  MAXFONTSIZE = 20;
 
 procedure TForm1.SmallerSpeedButtonClick(Sender: TObject);
 begin
