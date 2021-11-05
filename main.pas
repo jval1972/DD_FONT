@@ -119,6 +119,7 @@ type
     procedure SaveAs1Click(Sender: TObject);
     procedure BoldSpeedButtonClick(Sender: TObject);
     procedure ItalicSpeedButtonClick(Sender: TObject);
+    procedure UnderlineSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -590,6 +591,19 @@ begin
     Include(stl, fsItalic)
   else
     Exclude(stl, fsItalic);
+  ff.Style := stl;
+  needsupdate := True;
+end;
+
+procedure TForm1.UnderlineSpeedButtonClick(Sender: TObject);
+var
+  stl: TFontStylesBase;
+begin
+  stl := ff.Style;
+  if UnderlineSpeedButton.Down then
+    Include(stl, fsUnderline)
+  else
+    Exclude(stl, fsUnderline);
   ff.Style := stl;
   needsupdate := True;
 end;

@@ -2213,6 +2213,7 @@ object Form1: TForm1
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4
           F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4}
         Layout = blGlyphRight
+        OnClick = UnderlineSpeedButtonClick
       end
       object StrikeOutSpeedButton: TSpeedButton
         Left = 114
