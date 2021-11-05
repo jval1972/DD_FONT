@@ -579,8 +579,13 @@ begin
     Include(stl, fsBold)
   else
     Exclude(stl, fsBold);
-  ff.Style := stl;
-  needsupdate := True;
+  if stl <> ff.Style then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.Style := stl;
+    needsupdate := True;
+  end;
 end;
 
 procedure TForm1.ItalicSpeedButtonClick(Sender: TObject);
@@ -592,8 +597,13 @@ begin
     Include(stl, fsItalic)
   else
     Exclude(stl, fsItalic);
-  ff.Style := stl;
-  needsupdate := True;
+  if stl <> ff.Style then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.Style := stl;
+    needsupdate := True;
+  end;
 end;
 
 procedure TForm1.UnderlineSpeedButtonClick(Sender: TObject);
@@ -605,8 +615,13 @@ begin
     Include(stl, fsUnderline)
   else
     Exclude(stl, fsUnderline);
-  ff.Style := stl;
-  needsupdate := True;
+  if stl <> ff.Style then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.Style := stl;
+    needsupdate := True;
+  end;
 end;
 
 procedure TForm1.StrikeOutSpeedButtonClick(Sender: TObject);
@@ -618,16 +633,26 @@ begin
     Include(stl, fsStrikeOut)
   else
     Exclude(stl, fsStrikeOut);
-  ff.Style := stl;
-  needsupdate := True;
+  if stl <> ff.Style then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+    ff.Style := stl;
+    needsupdate := True;
+  end;
 end;
 
 procedure TForm1.FontNamesComboBoxClick(Sender: TObject);
 begin
   if FontNamesComboBox.Items.IndexOf(FontNamesComboBox.Text) >= 0 then
   begin
-    ff.FontName := FontNamesComboBox.Text;
-    needsupdate := True;
+    if FontNamesComboBox.Text <> ff.FontName then
+    begin
+      undoManager.SaveUndo;
+      changed := True;
+      ff.FontName := FontNamesComboBox.Text;
+      needsupdate := True;
+    end;
   end;
 end;
 
