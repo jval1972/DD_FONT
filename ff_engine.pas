@@ -33,6 +33,10 @@ interface
 uses
   Windows, SysUtils, Classes, Graphics;
 
+const
+  MINFONTSIZE = 4;
+  MAXFONTSIZE = 20;
+
 type
   TFontEngine = class(TObject)
   private

@@ -771,10 +771,6 @@ begin
   end;
 end;
 
-const
-  MINFONTSIZE = 4;
-  MAXFONTSIZE = 20;
-
 procedure TForm1.SmallerSpeedButtonClick(Sender: TObject);
 begin
   if ff.FontSize > MINFONTSIZE then
