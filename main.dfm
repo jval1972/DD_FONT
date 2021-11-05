@@ -3338,6 +3338,13 @@ object Form1: TForm1
         Caption = '-'
       end
     end
+    object ools1: TMenuItem
+      Caption = 'Tools'
+      object Openexternalfont1: TMenuItem
+        Caption = 'Open external TTF font'
+        OnClick = Openexternalfont1Click
+      end
+    end
     object Help1: TMenuItem
       Caption = 'Help'
       object About1: TMenuItem
@@ -3393,5 +3400,12 @@ object Form1: TForm1
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
     Left = 353
     Top = 145
+  end
+  object OpenDialog2: TOpenDialog
+    DefaultExt = 'ttf'
+    Filter = 'TTF Fonts (*.ttf)|*.ttf'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Left = 393
+    Top = 144
   end
 end

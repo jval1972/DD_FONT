@@ -118,6 +118,9 @@ type
     DrawWidthPaintBox: TPaintBox;
     CharWidthLabel: TLabel;
     CharHeightLabel: TLabel;
+    ools1: TMenuItem;
+    Openexternalfont1: TMenuItem;
+    OpenDialog2: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -158,6 +161,7 @@ type
     procedure ZoomOut1Click(Sender: TObject);
     procedure GridButton1Click(Sender: TObject);
     procedure ExportImage1Click(Sender: TObject);
+    procedure Openexternalfont1Click(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -173,6 +177,7 @@ type
     flastzoomwheel: int64;
     DrawWidthSlider: TSliderHook;
     DrawHeightSlider: TSliderHook;
+    ExternalFonts: TStringList;
     procedure Idle(Sender: TObject; var Done: Boolean);
     procedure Hint(Sender: TObject);
     procedure UpdateEnable(const force: Boolean = False);
@@ -193,6 +198,7 @@ type
     procedure DrawGrid;
     procedure OnDrawWidthChange(Sender: TObject);
     procedure OnDrawHeightChange(Sender: TObject);
+    procedure InstallExternalFont(const ttffile: string);
   public
     { Public declarations }
   end;
@@ -248,6 +254,8 @@ begin
   drawbuffer := TBitmap.Create;
 
   flastzoomwheel := GetTickCount;
+
+  ExternalFonts := TStringList.Create;
 
   ff := TFontEngine.Create;
 
@@ -336,6 +344,9 @@ begin
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
+var
+  i: integer;
+  p: PChar;
 begin
   undoManager.Free;
 
@@ -363,6 +374,14 @@ begin
 
   DrawWidthSlider.Free;
   DrawHeightSlider.Free;
+
+  for i := 0 to ExternalFonts.Count - 1 do
+  begin
+    p := PChar(ExternalFonts.Strings[i]);
+    RemoveFontResource(p);
+    SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+  end;
+  ExternalFonts.Free;
 
   ff.Free;
 end;
@@ -961,6 +980,46 @@ begin
     finally
       Screen.Cursor := crDefault;
     end;
+  end;
+end;
+
+procedure TForm1.Openexternalfont1Click(Sender: TObject);
+begin
+  if OpenDialog2.Execute then
+    InstallExternalFont(OpenDialog2.FileName);
+end;
+
+procedure TForm1.InstallExternalFont(const ttffile: string);
+var
+  p: PChar;
+  fList: TStringList;
+  i: integer;
+begin
+  if ExternalFonts.IndexOf(ttffile) >= 0 then
+  begin
+    MessageBox(
+      Handle,
+      PChar(Format('"%s"'#13#10'already loaded', [MkShortName(ttffile)])),
+      PChar(rsTitle),
+      MB_OK or MB_ICONINFORMATION or MB_APPLMODAL);
+      Exit;
+  end;
+
+  Screen.Cursor := crHourGlass;
+  try
+    p := PChar(ttffile);
+    AddFontResource(p);
+    SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+    ExternalFonts.Add(ttffile);
+
+    fList := TStringList.Create;
+    CollectFonts(fList);
+    FontNamesComboBox.Items.Clear;
+    for i := 0 to fList.Count -1 do
+      FontNamesComboBox.Items.Add(FList[i]);
+    fList.Free;
+  finally
+    Screen.Cursor := crDefault;
   end;
 end;
 
