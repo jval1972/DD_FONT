@@ -53,6 +53,8 @@ type
     destructor Destroy; override;
     procedure DrawToCanvas(const C: TCanvas);
     procedure DrawToBitmap(const bm: TBitmap);
+    procedure FromFont(const fnt: TFont);
+    procedure ToFont(const fnt: TFont);
     procedure SaveToStream(const strm: TStream);
     procedure LoadFromStream(const strm: TStream);
     procedure SaveToFile(const fn: string);
@@ -156,6 +158,29 @@ begin
   bm.PixelFormat := pf32bit;
 
   DrawToCanvas(bm.Canvas);
+end;
+
+procedure TFontEngine.FromFont(const fnt: TFont);
+begin
+  fHeight := fnt.Height;
+  fHeight := fnt.Height;
+  fPitch := fnt.Pitch;
+  fStyle := fnt.Style;
+  fCharset := fnt.Charset;
+  fFrontColor := fnt.Color;
+  fFontName := fnt.Name;
+  fFontSize := fnt.Size;
+end;
+
+procedure TFontEngine.ToFont(const fnt: TFont);
+begin
+  fnt.Height := fHeight;
+  fnt.Pitch := fPitch;
+  fnt.Style := fStyle;
+  fnt.Charset := fCharset;
+  fnt.Color := fFrontColor;
+  fnt.Name := fFontName;
+  fnt.Size := fFontSize;
 end;
 
 const
