@@ -125,7 +125,6 @@ begin
   lC.Pen.Color := fBackColor;
   lC.Brush.Style := bsSolid;
   lC.Brush.Color := fBackColor;
-  lC.FillRect(Rect(0, 0, fDrawWidth, fDrawHeight));
   lC.Font.Height := fHeight;
   lC.Font.Pitch := fPitch;
   lC.Font.Style := fStyle;
@@ -138,7 +137,8 @@ begin
   for gy := 0 to fGridHeight - 1 do
     for gx := 0 to fGridWidth do
     begin
-      letter.Canvas.TextOut(0, 0, ch);
+      lC.FillRect(Rect(0, 0, fDrawWidth, fDrawHeight));
+      lC.TextOut(0, 0, ch);
       bC.Draw(gx * fGridWidth, gy * fGridHeight, letter);
       Inc(ch);
     end;
