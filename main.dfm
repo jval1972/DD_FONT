@@ -2263,11 +2263,19 @@ object Form1: TForm1
     Top = 105
   end
   object OpenDialog1: TOpenDialog
+    DefaultExt = 'ddfont'
+    Filter = 
+      'DD Font Files (*.ddfont)|*.ddfont|Text Files (*.txt)|*.txt|All F' +
+      'iles (*.*)|*.*'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 169
     Top = 144
   end
   object SaveDialog1: TSaveDialog
+    DefaultExt = 'ddfont'
+    Filter = 
+      'DD Font Files (*.ddfont)|*.ddfont|Text Files (*.txt)|*.txt|All F' +
+      'iles (*.*)|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
     Left = 217
     Top = 144

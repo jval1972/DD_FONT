@@ -316,6 +316,7 @@ end;
 
 procedure TForm1.InvalidatePaintBox;
 begin
+  ff.DrawToBitmap(buffer);
   PaintBox1.Width := buffer.Width;
   PaintBox1.Height := buffer.Height;
   CreateDrawBuffer;
@@ -396,11 +397,13 @@ end;
 
 procedure TForm1.DoLoadFromStream(const s: TStream);
 begin
+  ff.LoadFromStream(s);
   needsupdate := True;
 end;
 
 procedure TForm1.DoSaveToStream(const s: TStream);
 begin
+  ff.SaveToStream(s);
 end;
 
 procedure TForm1.DoLoadUndo(const s: TStream);
