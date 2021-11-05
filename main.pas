@@ -120,6 +120,7 @@ type
     procedure BoldSpeedButtonClick(Sender: TObject);
     procedure ItalicSpeedButtonClick(Sender: TObject);
     procedure UnderlineSpeedButtonClick(Sender: TObject);
+    procedure StrikeOutSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -603,6 +604,19 @@ begin
     Include(stl, fsUnderline)
   else
     Exclude(stl, fsUnderline);
+  ff.Style := stl;
+  needsupdate := True;
+end;
+
+procedure TForm1.StrikeOutSpeedButtonClick(Sender: TObject);
+var
+  stl: TFontStylesBase;
+begin
+  stl := ff.Style;
+  if StrikeOutSpeedButton.Down then
+    Include(stl, fsStrikeOut)
+  else
+    Exclude(stl, fsStrikeOut);
   ff.Style := stl;
   needsupdate := True;
 end;
