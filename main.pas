@@ -72,7 +72,6 @@ type
     New1: TMenuItem;
     N3: TMenuItem;
     Save2: TMenuItem;
-    Cut1: TMenuItem;
     HistoryItem0: TMenuItem;
     HistoryItem1: TMenuItem;
     HistoryItem2: TMenuItem;
@@ -679,8 +678,10 @@ begin
       ]
     );
   DrawWidthSlider.Position := ff.DrawWidth;
+  DrawWidthPaintBox.Hint := IntToStr(ff.DrawWidth);
   CharWidthLabel.Caption := Format('Rect Width: %d', [ff.DrawWidth]);
   DrawHeightSlider.Position := ff.DrawHeight;
+  DrawHeightPaintBox.Hint := IntToStr(ff.DrawHeight);
   CharHeightLabel.Caption := Format('Rect Height: %d', [ff.DrawHeight]);
 end;
 

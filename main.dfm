@@ -1287,7 +1287,7 @@ object Form1: TForm1
       Top = 4
       Width = 58
       Height = 56
-      Hint = 'Copy to Clipboard'
+      Hint = 'Copy to clipboard as image'
       Caption = 'Copy'
       Flat = True
       Glyph.Data = {
@@ -2139,6 +2139,8 @@ object Form1: TForm1
         Top = 4
         Width = 36
         Height = 36
+        Hint = 'Bold'
+        HelpType = htKeyword
         AllowAllUp = True
         GroupIndex = 2
         Flat = True
@@ -2249,6 +2251,7 @@ object Form1: TForm1
         Top = 4
         Width = 36
         Height = 36
+        Hint = 'Italic'
         AllowAllUp = True
         GroupIndex = 3
         Flat = True
@@ -2359,6 +2362,7 @@ object Form1: TForm1
         Top = 4
         Width = 36
         Height = 36
+        Hint = 'Underline'
         AllowAllUp = True
         GroupIndex = 4
         Flat = True
@@ -2469,6 +2473,7 @@ object Form1: TForm1
         Top = 4
         Width = 36
         Height = 36
+        Hint = 'Strikeout'
         AllowAllUp = True
         GroupIndex = 5
         Flat = True
@@ -2579,6 +2584,7 @@ object Form1: TForm1
         Top = 84
         Width = 36
         Height = 36
+        Hint = 'Background color'
         Flat = True
         Glyph.Data = {
           360C0000424D360C000000000000360000002800000020000000200000000100
@@ -2687,6 +2693,7 @@ object Form1: TForm1
         Top = 84
         Width = 36
         Height = 36
+        Hint = 'Foreground color'
         Flat = True
         Glyph.Data = {
           360C0000424D360C000000000000360000002800000020000000200000000100
@@ -2795,6 +2802,7 @@ object Form1: TForm1
         Top = 44
         Width = 36
         Height = 36
+        Hint = 'Decrease font size'
         Flat = True
         Glyph.Data = {
           360C0000424D360C000000000000360000002800000020000000200000000100
@@ -2903,6 +2911,7 @@ object Form1: TForm1
         Top = 44
         Width = 36
         Height = 36
+        Hint = 'Increase font size'
         Flat = True
         Glyph.Data = {
           360C0000424D360C000000000000360000002800000020000000200000000100
@@ -3011,6 +3020,7 @@ object Form1: TForm1
         Top = 124
         Width = 36
         Height = 36
+        Hint = 'Select font'
         Flat = True
         Glyph.Data = {
           360C0000424D360C000000000000360000002800000020000000200000000100
@@ -3119,6 +3129,7 @@ object Form1: TForm1
         Top = 48
         Width = 26
         Height = 13
+        Hint = 'Font size'
         Caption = 'Size: '
       end
       object FontSizeLabel: TLabel
@@ -3133,6 +3144,7 @@ object Form1: TForm1
         Top = 168
         Width = 145
         Height = 21
+        Hint = 'Font'
         ItemHeight = 13
         TabOrder = 0
         OnClick = FontNamesComboBoxClick
@@ -3229,10 +3241,11 @@ object Form1: TForm1
     Top = 217
     object File1: TMenuItem
       Caption = 'File'
-      Hint = 'Open an image from disk'
+      Hint = 'File functions'
       OnClick = File1Click
       object New1: TMenuItem
         Caption = 'New'
+        Hint = 'Create a new Font'
         ShortCut = 16462
         OnClick = New1Click
       end
@@ -3241,17 +3254,19 @@ object Form1: TForm1
       end
       object Open1: TMenuItem
         Caption = 'Open'
+        Hint = 'Open a Font from disk'
         ShortCut = 16463
         OnClick = Open1Click
       end
       object Save2: TMenuItem
         Caption = 'Save'
+        Hint = 'Save Font to disk'
         ShortCut = 16467
         OnClick = Save1Click
       end
       object SaveAs1: TMenuItem
         Caption = 'Save As'
-        Hint = 'Save texture to disk'
+        Hint = 'Save Font to disk with a new name'
         OnClick = SaveAs1Click
       end
       object N5: TMenuItem
@@ -3259,8 +3274,10 @@ object Form1: TForm1
       end
       object Export1: TMenuItem
         Caption = 'Export'
+        Hint = 'Export functions'
         object ExportImage1: TMenuItem
           Caption = 'Image'
+          Hint = 'Export as plain image'
           OnClick = ExportImage1Click
         end
       end
@@ -3309,28 +3326,26 @@ object Form1: TForm1
     end
     object Edit1: TMenuItem
       Caption = 'Edit'
+      Hint = 'Edit functions'
       OnClick = Edit1Click
       object Undo1: TMenuItem
         Caption = 'Undo'
+        Hint = 'Undo last action'
         ShortCut = 16469
         OnClick = Undo1Click
       end
       object Redo1: TMenuItem
         Caption = 'Redo'
+        Hint = 'Redo last undo action'
         ShortCut = 16466
         OnClick = Redo1Click
       end
       object N4: TMenuItem
         Caption = '-'
       end
-      object Cut1: TMenuItem
-        Caption = 'Cut'
-        Hint = 'Cut to clipboard'
-        ShortCut = 16472
-      end
       object Copy1: TMenuItem
         Caption = 'Copy'
-        Hint = 'Copy to clipboard'
+        Hint = 'Copy to clipboard as image'
         ShortCut = 16451
         OnClick = Copy1Click
       end
@@ -3340,6 +3355,7 @@ object Form1: TForm1
     end
     object ools1: TMenuItem
       Caption = 'Tools'
+      Hint = 'Tools'
       object Openexternalfont1: TMenuItem
         Caption = 'Open external TTF font'
         OnClick = Openexternalfont1Click
@@ -3347,6 +3363,7 @@ object Form1: TForm1
     end
     object Help1: TMenuItem
       Caption = 'Help'
+      Hint = 'Help'
       object About1: TMenuItem
         Caption = 'About'
         Hint = 'Display version information'
