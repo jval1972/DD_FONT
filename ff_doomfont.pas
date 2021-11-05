@@ -3,9 +3,8 @@
 //  DD_FONT: Font Creator
 //  Copyright (C) 2021 by Jim Valavanis
 //
-//  Copyright (C) https://www.dafont.com/doom.font
-//
 //  This portion of this program is freeware with no commercial use restriction
+//    See also: https://www.dafont.com/doom.font
 //
 // DESCRIPTION:
 //  Doom Font
