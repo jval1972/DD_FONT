@@ -123,6 +123,7 @@ type
     procedure StrikeOutSpeedButtonClick(Sender: TObject);
     procedure FontNamesComboBoxClick(Sender: TObject);
     procedure SmallerSpeedButtonClick(Sender: TObject);
+    procedure BiggerSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -674,6 +675,26 @@ begin
       ff.FontSize := 20
     else
       ff.FontSize := ff.FontSize - 4;
+
+    needsupdate := True;
+  end;
+end;
+
+procedure TForm1.BiggerSpeedButtonClick(Sender: TObject);
+begin
+  if ff.FontSize < MAXFONTSIZE then
+  begin
+    undoManager.SaveUndo;
+    changed := True;
+
+    if ff.FontSize > 19 then
+    begin
+      ff.FontSize := ff.FontSize + 4;
+      if ff.FontSize > MAXFONTSIZE then
+        ff.FontSize := MAXFONTSIZE;
+    end
+    else
+      ff.FontSize := ff.FontSize + 1;
 
     needsupdate := True;
   end;
