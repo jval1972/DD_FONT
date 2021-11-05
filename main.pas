@@ -787,6 +787,9 @@ begin
     else
       ff.FontSize := ff.FontSize - 4;
 
+    if ff.FontSize > MAXFONTSIZE then
+      ff.FontSize := MAXFONTSIZE;
+
     needsupdate := True;
   end;
 end;
@@ -806,6 +809,9 @@ begin
     end
     else
       ff.FontSize := ff.FontSize + 1;
+
+    if ff.FontSize < MINFONTSIZE then
+      ff.FontSize := MINFONTSIZE;
 
     needsupdate := True;
   end;
