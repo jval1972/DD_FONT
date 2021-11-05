@@ -538,9 +538,9 @@ end;
 procedure TForm1.UpdateControls;
 begin
   BoldSpeedButton.Down := fsBold in ff.Style;
-  ItalicSpeedButton := fsItalic in ff.Style;
-  UnderlineSpeedButton := fsUnderline in ff.Style;
-  StrikeOutSpeedButton := fsStrikeOut in ff.Style;
+  ItalicSpeedButton.Down := fsItalic in ff.Style;
+  UnderlineSpeedButton.Down := fsUnderline in ff.Style;
+  StrikeOutSpeedButton.Down := fsStrikeOut in ff.Style;
 end;
 
 end.
