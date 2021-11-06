@@ -3342,20 +3342,77 @@ object Form1: TForm1
       Left = 8
       Top = 208
       Width = 329
-      Height = 225
+      Height = 81
       ActivePage = TabSheet1
       Style = tsFlatButtons
       TabOrder = 5
       object TabSheet1: TTabSheet
+        Hint = 'Generate a single patch with a text string'
         Caption = 'Text String'
+        object Label3: TLabel
+          Left = 8
+          Top = 8
+          Width = 29
+          Height = 13
+          Caption = 'Text: '
+          FocusControl = TextExportEdit
+        end
+        object TextExportEdit: TEdit
+          Left = 40
+          Top = 8
+          Width = 249
+          Height = 21
+          Hint = 'Enter the text for the patch'
+          MaxLength = 99
+          TabOrder = 0
+          Text = 'Doom Font Creator'
+        end
       end
       object TabSheet2: TTabSheet
+        Hint = 'Generate all characters from #33 to #127'
         Caption = 'Font Sequence'
         ImageIndex = 1
+        object Label4: TLabel
+          Left = 8
+          Top = 8
+          Width = 35
+          Height = 13
+          Caption = 'Prefix: '
+          FocusControl = FontSequencePrefixEdit
+        end
+        object FontSequencePrefixEdit: TEdit
+          Left = 40
+          Top = 8
+          Width = 64
+          Height = 21
+          Hint = 'Font sequence prefix (5 characters max)'
+          MaxLength = 5
+          TabOrder = 0
+          Text = 'STCFN'
+        end
       end
       object TabSheet3: TTabSheet
+        Hint = 'Generate numbers from 0 to 9'
         Caption = 'Number Sequence'
         ImageIndex = 2
+        object Label5: TLabel
+          Left = 8
+          Top = 8
+          Width = 35
+          Height = 13
+          Caption = 'Prefix: '
+          FocusControl = NumberSequencePrefixEdit
+        end
+        object NumberSequencePrefixEdit: TEdit
+          Left = 40
+          Top = 8
+          Width = 64
+          Height = 21
+          Hint = 'Number sequence prefix (7 characters max)'
+          MaxLength = 7
+          TabOrder = 0
+          Text = 'STTNUM'
+        end
       end
     end
   end

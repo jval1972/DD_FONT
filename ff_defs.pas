@@ -63,6 +63,9 @@ var
   opt_PerlinNoise: Boolean = False;
   opt_Palette: bigstring_t;
   opt_ExternalPalette: bigstring_t;
+  opt_TextExport: bigstring_t;
+  opt_FontSequencePrefix: bigstring_t;
+  opt_NumberSequencePrefix: bigstring_t;
 
 function bigstringtostring(const bs: bigstring_p): string;
 
@@ -83,7 +86,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 21;
+  NUMSETTINGS = 24;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -191,6 +194,21 @@ var
       desc: 'EXTERNALPALETTE';
       typeof: tstBigString;
       location: @opt_ExternalPalette;
+    ),
+    (
+      desc: 'TEXTEXPORTSTRING';
+      typeof: tstBigString;
+      location: @opt_TextExport;
+    ),
+    (
+      desc: 'FONTSEQUENCEPREFIX';
+      typeof: tstBigString;
+      location: @opt_FontSequencePrefix;
+    ),
+    (
+      desc: 'NUMBERSEQUENCEPREFIX';
+      typeof: tstBigString;
+      location: @opt_NumberSequencePrefix;
     )
   );
 
@@ -336,6 +354,11 @@ begin
   end;
 
 end;
+
+initialization
+  stringtobigstring('Doom Font Creator', @opt_TextExport);
+  stringtobigstring('STCFN', @opt_FontSequencePrefix);
+  stringtobigstring('STTNUM', @opt_NumberSequencePrefix);
 
 end.
 

@@ -135,6 +135,12 @@ type
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
+    Label3: TLabel;
+    TextExportEdit: TEdit;
+    Label4: TLabel;
+    FontSequencePrefixEdit: TEdit;
+    Label5: TLabel;
+    NumberSequencePrefixEdit: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -342,6 +348,10 @@ begin
   PerlinNoiseCheckBox.Checked := opt_PerlinNoise;
   OtherPaletteEdit.Text := bigstringtostring(@opt_ExternalPalette);
 
+  TextExportEdit.Text := bigstringtostring(@opt_TextExport);
+  FontSequencePrefixEdit.Text := bigstringtostring(@opt_FontSequencePrefix);
+  NumberSequencePrefixEdit.Text := bigstringtostring(@opt_NumberSequencePrefix);
+
   fList := TStringList.Create;
   CollectFonts(fList);
   for i := 0 to fList.Count -1 do
@@ -397,6 +407,9 @@ begin
   opt_FixedPitch := FixedPitchCheckBox.Checked;
   opt_PerlinNoise := PerlinNoiseCheckBox.Checked;
   stringtobigstring(OtherPaletteEdit.Text, @opt_ExternalPalette);
+  stringtobigstring(TextExportEdit.Text, @opt_TextExport);
+  stringtobigstring(FontSequencePrefixEdit.Text, @opt_FontSequencePrefix);
+  stringtobigstring(NumberSequencePrefixEdit.Text, @opt_NumberSequencePrefix);
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
