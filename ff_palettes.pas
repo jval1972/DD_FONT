@@ -30,6 +30,9 @@ unit ff_palettes;
 
 interface
 
+uses
+  SysUtils, Classes;
+
 const
   spalDOOM = 'DOOM';
   spalHERETIC = 'HERETIC';
@@ -389,7 +392,15 @@ implementation
 uses
   Windows;
 
+var
+  tmppalette: rawpalette_t;
+
 function GetPaletteFromName(const spal: string): rawpalette_p;
+var
+  fs: TFileStream;
+  i: integer;
+  c: LongWord;
+  r, g, b: byte;
 begin
   if spal = spalDOOM then
     Result := @DoomPaletteRaw
@@ -404,7 +415,45 @@ begin
   else if spal = spalGLSPEED then
     Result := @GLSpeedPaletteRaw
   else
-    Result := nil;
+  begin
+    Result := @tmppalette;
+    // Create default grayscale palette
+    for i := 0 to 255 do
+    begin
+      tmppalette[3 * i] := i;
+      tmppalette[3 * i + 1] := i;
+      tmppalette[3 * i + 2] := i;
+    end;
+
+    if Trim(spal) = '' then
+      Exit;
+    if not FileExists(spal) then
+      Exit;
+
+    fs := TFileStream.Create(spal, fmOpenRead);
+    if fs.Size < SizeOf(rawpalette_t) then
+    begin
+      fs.Free;
+      Exit;
+    end;
+
+    if fs.Size mod SizeOf(rawpalette_t) = 0 then
+      fs.Read(tmppalette, SizeOf(tmppalette))
+    else if fs.Size mod SizeOf(TDoomPalette) = 0 then
+    begin
+      for i := 0 to 255 do
+      begin
+        fs.Read(c, SizeOf(c));
+        r := GetRValue(c);
+        g := GetGValue(c);
+        b := GetBValue(c);
+        tmppalette[3 * i] := b;
+        tmppalette[3 * i + 1] := g;
+        tmppalette[3 * i + 2] := r;
+      end;
+    end;
+    fs.Free;
+  end;
 end;
 
 procedure FF_RawPalette2DoomPalette(const rowpal: pointer; const palette: PDoomPalette);
