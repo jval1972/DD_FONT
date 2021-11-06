@@ -52,6 +52,7 @@ type
     fBackColor: LongWord;
     fGridWidth: Integer;
     fGridHeight: Integer;
+    function RightCropLetterBitmap(const bm: TBitmap): boolean;
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -60,6 +61,7 @@ type
     procedure DrawToBitmap(const bm: TBitmap);
     procedure DrawCharToCanvas(const C: TCanvas; const ch: Char);
     procedure DrawCharToBitmap(const bm: TBitmap; const ch: Char);
+    procedure DrawStringToBitmap(const bm: TBitmap; const s: string; const fixed_pitch: boolean);
     procedure FromFont(const fnt: TFont);
     procedure ToFont(const fnt: TFont);
     procedure SaveToStream(const strm: TStream);
@@ -210,6 +212,94 @@ begin
   bm.PixelFormat := pf32bit;
 
   DrawCharToCanvas(bm.Canvas, ch);
+end;
+
+function TFontEngine.RightCropLetterBitmap(const bm: TBitmap): boolean;
+const
+  BLANC_UNKNOWN = 0;
+  BLANC_NO = 1;
+  BLANC_YES = 2;
+var
+  inds: PByteArray;
+  i: integer;
+  minwidth: integer;
+
+  function _Check_Column(const cl: integer): Byte;
+  var
+    y: integer;
+  begin
+    if inds[cl] <> BLANC_UNKNOWN then
+    begin
+      Result := inds[cl];
+      Exit;
+    end;
+    Result := BLANC_YES;
+    for y := 0 to bm.Height - 1 do
+      if bm.Canvas.Pixels[cl, y] <> fBackColor then
+      begin
+        Result := BLANC_NO;
+        Break;
+      end;
+    inds[cl] := Result;
+  end;
+
+begin
+  Result := False;
+
+  minwidth := fFontSize div 2 - 1;
+  if minwidth < 3 then
+    minwidth := 3;
+  if bm.Width < minwidth then
+    Exit;
+
+  GetMem(inds, bm.Width);
+  for i := 0 to bm.Width - 1 do
+    inds[i] := BLANC_UNKNOWN;
+
+  for i := bm.Width - 1 downto minwidth do
+  begin
+    // Leave one blanc column on the right
+    if (_Check_Column(i) = BLANC_YES) and (_Check_Column(i - 1) = BLANC_YES) then
+    begin
+      bm.Width := bm.Width - 1;
+      Result := True;
+    end
+    else
+      Break;
+  end;
+
+  FreeMem(inds);
+end;
+
+procedure TFontEngine.DrawStringToBitmap(const bm: TBitmap; const s: string; const fixed_pitch: boolean);
+var
+  letter: TBitmap;
+  i, w: integer;
+  bC: TCanvas;
+begin
+  letter := TBitmap.Create;
+
+  w := 0;
+  for i := 1 to Length(s) do
+  begin
+    DrawCharToBitmap(letter, s[i]);
+    if not fixed_pitch then
+      RightCropLetterBitmap(letter);
+    bm.Canvas.Draw(w, 0, letter);
+    w := w + letter.Width;
+  end;
+
+  if w < bm.Width then
+  begin
+    bC := bm.Canvas;
+    bC.Pen.Style := psClear;
+    bC.Pen.Color := fBackColor;
+    bC.Brush.Style := bsSolid;
+    bC.Brush.Color := fBackColor;
+    bC.FillRect(Rect(w, 0, bm.Width, fDrawHeight));
+  end;
+
+  letter.Free;
 end;
 
 procedure TFontEngine.FromFont(const fnt: TFont);
