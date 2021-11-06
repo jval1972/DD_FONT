@@ -3489,8 +3489,8 @@ object Form1: TForm1
         Caption = 'Export'
         Hint = 'Export functions'
         object ExportImage1: TMenuItem
-          Caption = 'Image'
-          Hint = 'Export as plain image'
+          Caption = 'All characters as image'
+          Hint = 'Export all characters as a plain image'
           OnClick = ExportImage1Click
         end
       end
