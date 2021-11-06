@@ -382,6 +382,8 @@ const
 
 function GetPaletteFromName(const spal: string): rawpalette_p;
 
+procedure FF_GetPaletteRange(const spal: string; out start: integer; out finish: integer);
+
 procedure FF_RawPalette2DoomPalette(const rowpal: pointer; const palette: PDoomPalette);
 
 function FF_FindAproxColorIndex(const pal: PDoomPalette; const c: LongWord;
@@ -453,6 +455,45 @@ begin
       end;
     end;
     fs.Free;
+  end;
+end;
+
+procedure FF_GetPaletteRange(const spal: string; out start: integer; out finish: integer);
+begin
+  if spal = spalDOOM then
+  begin
+    start := 1;
+    finish := 255;
+  end
+  else if spal = spalHERETIC then
+  begin
+    start := 1;
+    finish := 255;
+  end
+  else if spal = spalHEXEN then
+  begin
+    start := 1;
+    finish := 255;
+  end
+  else if spal = spalSTRIFE then
+  begin
+    start := 1;
+    finish := 255;
+  end
+  else if spal = spalRADIX then
+  begin
+    start := 1;
+    finish := 251;
+  end
+  else if spal = spalGLSPEED then
+  begin
+    start := 16;
+    finish := 239;
+  end
+  else
+  begin
+    start := 1;
+    finish := 255;
   end;
 end;
 
