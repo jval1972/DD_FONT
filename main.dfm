@@ -3284,7 +3284,7 @@ object Form1: TForm1
     object PaletteRadioGroup: TRadioGroup
       Left = 8
       Top = 80
-      Width = 321
+      Width = 322
       Height = 121
       Caption = ' Palette '
       Columns = 2
@@ -3298,6 +3298,7 @@ object Form1: TForm1
         'GLSpeed/Speed Haste'
         'Other...')
       TabOrder = 3
+      OnClick = PaletteRadioGroupClick
     end
     object PerlinNoiseCheckBox: TCheckBox
       Left = 8
@@ -3346,6 +3347,7 @@ object Form1: TForm1
       ActivePage = TabSheet1
       Style = tsFlatButtons
       TabOrder = 5
+      OnChange = ExportPageControlChange
       object TabSheet1: TTabSheet
         Hint = 'Generate a single patch with a text string'
         Caption = 'Text String'
@@ -3366,6 +3368,7 @@ object Form1: TForm1
           MaxLength = 99
           TabOrder = 0
           Text = 'Doom Font Creator'
+          OnChange = TextExportEditChange
         end
       end
       object TabSheet2: TTabSheet
@@ -3389,6 +3392,7 @@ object Form1: TForm1
           MaxLength = 5
           TabOrder = 0
           Text = 'STCFN'
+          OnChange = FontSequencePrefixEditChange
         end
       end
       object TabSheet3: TTabSheet
@@ -3412,7 +3416,27 @@ object Form1: TForm1
           MaxLength = 7
           TabOrder = 0
           Text = 'STTNUM'
+          OnChange = NumberSequencePrefixEditChange
         end
+      end
+    end
+    object PreviewGroupBox: TGroupBox
+      Left = 8
+      Top = 296
+      Width = 322
+      Height = 65
+      Caption = ' Preview '
+      TabOrder = 6
+      object PreviewImage: TImage
+        Left = 1
+        Top = 16
+        Width = 320
+        Height = 41
+        Picture.Data = {
+          07544269746D617066000000424D660000000000000036000000280000000400
+          000004000000010018000000000030000000330B0000330B0000000000000000
+          0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       end
     end
   end

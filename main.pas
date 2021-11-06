@@ -141,6 +141,8 @@ type
     FontSequencePrefixEdit: TEdit;
     Label5: TLabel;
     NumberSequencePrefixEdit: TEdit;
+    PreviewGroupBox: TGroupBox;
+    PreviewImage: TImage;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -186,6 +188,11 @@ type
     procedure OtherPaletteEditChange(Sender: TObject);
     procedure FixedPitchCheckBoxClick(Sender: TObject);
     procedure PerlinNoiseCheckBoxClick(Sender: TObject);
+    procedure PaletteRadioGroupClick(Sender: TObject);
+    procedure ExportPageControlChange(Sender: TObject);
+    procedure TextExportEditChange(Sender: TObject);
+    procedure FontSequencePrefixEditChange(Sender: TObject);
+    procedure NumberSequencePrefixEditChange(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -737,6 +744,13 @@ end;
 procedure TForm1.UpdateFontGenerationControls;
 begin
   ChooseOtherPalettePanel.Visible := PaletteRadioGroup.ItemIndex = 6;
+  PreviewImage.Picture.Bitmap.Width := 320;
+  PreviewImage.Picture.Bitmap.Height := ff.DrawHeight;
+  case ExportPageControl.ActivePageIndex of
+    0: ff.DrawStringToBitmap(PreviewImage.Picture.Bitmap, TextExportEdit.Text, FixedPitchCheckBox.Checked);
+    1: ff.DrawStringToBitmap(PreviewImage.Picture.Bitmap, '!@#$%+-AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz', FixedPitchCheckBox.Checked);
+    2: ff.DrawStringToBitmap(PreviewImage.Picture.Bitmap, '1234567890', FixedPitchCheckBox.Checked);
+  end;
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
@@ -1121,6 +1135,7 @@ begin
     OtherPaletteEdit.Hint := 'External palette'
   else
     OtherPaletteEdit.Hint := OtherPaletteEdit.Text;
+  needsgenerationcontrolsupdate := True;
 end;
 
 procedure TForm1.FixedPitchCheckBoxClick(Sender: TObject);
@@ -1132,6 +1147,31 @@ end;
 procedure TForm1.PerlinNoiseCheckBoxClick(Sender: TObject);
 begin
   opt_PerlinNoise := PerlinNoiseCheckBox.Checked;
+  needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.PaletteRadioGroupClick(Sender: TObject);
+begin
+  needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.ExportPageControlChange(Sender: TObject);
+begin
+  needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.TextExportEditChange(Sender: TObject);
+begin
+  needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.FontSequencePrefixEditChange(Sender: TObject);
+begin
+  needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.NumberSequencePrefixEditChange(Sender: TObject);
+begin
   needsgenerationcontrolsupdate := True;
 end;
 
