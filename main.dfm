@@ -3205,9 +3205,9 @@ object Form1: TForm1
     end
   end
   object Panel4: TPanel
-    Left = 168
+    Left = 508
     Top = 61
-    Width = 984
+    Width = 644
     Height = 553
     Align = alClient
     BevelOuter = bvNone
@@ -3216,7 +3216,7 @@ object Form1: TForm1
     object ScrollBox1: TScrollBox
       Left = 0
       Top = 24
-      Width = 984
+      Width = 644
       Height = 529
       Align = alClient
       BevelEdges = []
@@ -3241,7 +3241,7 @@ object Form1: TForm1
     object Panel6: TPanel
       Left = 0
       Top = 0
-      Width = 984
+      Width = 644
       Height = 24
       Align = alTop
       Caption = ' '
@@ -3255,9 +3255,83 @@ object Form1: TForm1
       end
     end
   end
+  object ExportPanel: TPanel
+    Left = 168
+    Top = 61
+    Width = 340
+    Height = 553
+    Align = alLeft
+    TabOrder = 4
+    object Panel1: TPanel
+      Left = 1
+      Top = 1
+      Width = 338
+      Height = 24
+      Align = alTop
+      Caption = 'Export Parameters'
+      TabOrder = 0
+    end
+    object FixedPitchCheckBox: TCheckBox
+      Left = 16
+      Top = 40
+      Width = 97
+      Height = 17
+      Caption = 'Fixed Pitch'
+      TabOrder = 1
+    end
+    object PaletteRadioGroup: TRadioGroup
+      Left = 16
+      Top = 88
+      Width = 305
+      Height = 129
+      Caption = ' Palette '
+      Columns = 2
+      Items.Strings = (
+        'Doom/Doom2'
+        'Heretic'
+        'Hexen'
+        'Strife'
+        'RAD/Radix'
+        'GLSpeed/Speed Haste'
+        'Other...')
+      TabOrder = 3
+    end
+    object PerlinNoiseCheckBox: TCheckBox
+      Left = 16
+      Top = 64
+      Width = 97
+      Height = 17
+      Caption = 'Add Perlin Noise'
+      TabOrder = 2
+    end
+    object ChooseOtherPalettePanel: TPanel
+      Left = 168
+      Top = 184
+      Width = 145
+      Height = 25
+      BevelOuter = bvNone
+      Caption = ' '
+      TabOrder = 4
+      object SpeedButton1: TSpeedButton
+        Left = 120
+        Top = 0
+        Width = 23
+        Height = 22
+        Caption = '...'
+        Flat = True
+      end
+      object OtherPaletteEdit: TEdit
+        Left = 8
+        Top = 0
+        Width = 113
+        Height = 21
+        TabOrder = 0
+      end
+    end
+  end
   object MainMenu1: TMainMenu
-    Left = 209
-    Top = 217
+    Left = 801
+    Top = 113
     object File1: TMenuItem
       Caption = 'File'
       Hint = 'File functions'
@@ -3393,8 +3467,8 @@ object Form1: TForm1
   object Timer1: TTimer
     Interval = 500
     OnTimer = Timer1Timer
-    Left = 217
-    Top = 105
+    Left = 521
+    Top = 113
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'ddfont'
@@ -3402,8 +3476,8 @@ object Form1: TForm1
       'DD Font Files (*.ddfont)|*.ddfont|Text Files (*.txt)|*.txt|All F' +
       'iles (*.*)|*.*'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    Left = 169
-    Top = 144
+    Left = 561
+    Top = 112
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = 'ddfont'
@@ -3411,8 +3485,8 @@ object Form1: TForm1
       'DD Font Files (*.ddfont)|*.ddfont|Text Files (*.txt)|*.txt|All F' +
       'iles (*.*)|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
-    Left = 217
-    Top = 144
+    Left = 641
+    Top = 112
   end
   object FontDialog1: TFontDialog
     Font.Charset = DEFAULT_CHARSET
@@ -3420,13 +3494,13 @@ object Form1: TForm1
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    Left = 265
-    Top = 144
+    Left = 761
+    Top = 112
   end
   object ColorDialog1: TColorDialog
     Options = [cdFullOpen]
-    Left = 312
-    Top = 144
+    Left = 720
+    Top = 112
   end
   object SavePictureDialog1: TSavePictureDialog
     DefaultExt = 'png'
@@ -3434,14 +3508,14 @@ object Form1: TForm1
       'PNG Images (*.png)|*.png|JPEG Image (*.jpg)|*.jpg|Bitmaps (*.bmp' +
       ')|*.bmp'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
-    Left = 353
-    Top = 145
+    Left = 681
+    Top = 113
   end
   object OpenDialog2: TOpenDialog
     DefaultExt = 'ttf'
     Filter = 'TTF Fonts (*.ttf)|*.ttf'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    Left = 393
-    Top = 144
+    Left = 601
+    Top = 112
   end
 end

@@ -122,6 +122,14 @@ type
     CharWidthLabel: TLabel;
     CharHeightLabel: TLabel;
     Label2: TLabel;
+    ExportPanel: TPanel;
+    Panel1: TPanel;
+    FixedPitchCheckBox: TCheckBox;
+    PaletteRadioGroup: TRadioGroup;
+    PerlinNoiseCheckBox: TCheckBox;
+    ChooseOtherPalettePanel: TPanel;
+    OtherPaletteEdit: TEdit;
+    SpeedButton1: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -317,6 +325,9 @@ begin
   DrawWidthSlider.Position := opt_DrawWidth;
   DrawHeightSlider.Position := opt_DrawHeight;
 
+  FixedPitchCheckBox.Checked := opt_FixedPitch;
+  PerlinNoiseCheckBox.Checked := opt_PerlinNoise;
+
   fList := TStringList.Create;
   CollectFonts(fList);
   for i := 0 to fList.Count -1 do
@@ -368,6 +379,8 @@ begin
   opt_zoom := zoom;
   opt_DrawWidth := Round(DrawWidthSlider.Position);
   opt_DrawHeight := Round(DrawHeightSlider.Position);
+  opt_FixedPitch := FixedPitchCheckBox.Checked;
+  opt_PerlinNoise := PerlinNoiseCheckBox.Checked;
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
