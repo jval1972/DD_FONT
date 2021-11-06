@@ -129,7 +129,8 @@ type
     PerlinNoiseCheckBox: TCheckBox;
     ChooseOtherPalettePanel: TPanel;
     OtherPaletteEdit: TEdit;
-    SpeedButton1: TSpeedButton;
+    LoadPaletteSpeedButton: TSpeedButton;
+    OpenPaletteDialog: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -171,6 +172,7 @@ type
     procedure GridButton1Click(Sender: TObject);
     procedure ExportImage1Click(Sender: TObject);
     procedure Openexternalfont1Click(Sender: TObject);
+    procedure LoadPaletteSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -327,6 +329,7 @@ begin
 
   FixedPitchCheckBox.Checked := opt_FixedPitch;
   PerlinNoiseCheckBox.Checked := opt_PerlinNoise;
+  OtherPaletteEdit.Text := bigstringtostring(@opt_ExternalPalette);
 
   fList := TStringList.Create;
   CollectFonts(fList);
@@ -381,6 +384,7 @@ begin
   opt_DrawHeight := Round(DrawHeightSlider.Position);
   opt_FixedPitch := FixedPitchCheckBox.Checked;
   opt_PerlinNoise := PerlinNoiseCheckBox.Checked;
+  stringtobigstring(OtherPaletteEdit.Text, @opt_ExternalPalette);
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
@@ -1068,6 +1072,12 @@ begin
   AddFontResource(p);
   SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   ExternalFonts.Add(tmpfile);
+end;
+
+procedure TForm1.LoadPaletteSpeedButtonClick(Sender: TObject);
+begin
+  if OpenPaletteDialog.Execute then
+    OtherPaletteEdit.Text := OpenPaletteDialog.FileName;
 end;
 
 end.

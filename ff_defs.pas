@@ -62,6 +62,7 @@ var
   opt_FixedPitch: Boolean = False;
   opt_PerlinNoise: Boolean = False;
   opt_Palette: bigstring_t;
+  opt_ExternalPalette: bigstring_t;
 
 function bigstringtostring(const bs: bigstring_p): string;
 
@@ -82,7 +83,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 20;
+  NUMSETTINGS = 21;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -185,6 +186,11 @@ var
       desc: 'PALETTE';
       typeof: tstBigString;
       location: @opt_Palette;
+    ),
+    (
+      desc: 'EXTERNALPALETTE';
+      typeof: tstBigString;
+      location: @opt_ExternalPalette;
     )
   );
 

@@ -3312,13 +3312,14 @@ object Form1: TForm1
       BevelOuter = bvNone
       Caption = ' '
       TabOrder = 4
-      object SpeedButton1: TSpeedButton
+      object LoadPaletteSpeedButton: TSpeedButton
         Left = 120
         Top = 0
         Width = 23
         Height = 22
         Caption = '...'
         Flat = True
+        OnClick = LoadPaletteSpeedButtonClick
       end
       object OtherPaletteEdit: TEdit
         Left = 8
@@ -3517,5 +3518,12 @@ object Form1: TForm1
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 601
     Top = 112
+  end
+  object OpenPaletteDialog: TOpenDialog
+    DefaultExt = 'pal'
+    Filter = 'Palette Files (*.pal)|*.pal|All Files (*.*)|*.*'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Left = 433
+    Top = 216
   end
 end
