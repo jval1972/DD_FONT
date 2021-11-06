@@ -47,6 +47,30 @@ function MkShortName(const fname: string): string;
 
 procedure SaveImageToDisk(const b: TBitmap; const imgfname: string);
 
+type
+  TDNumberList = class
+  private
+    fList: PIntegerArray;
+    fNumItems: integer;
+    fRealNumItems: integer;
+  protected
+    function Get(Index: Integer): integer; virtual;
+    procedure Put(Index: Integer; const value: integer); virtual;
+  public
+    constructor Create; virtual;
+    destructor Destroy; override;
+    function Add(const value: integer): integer; overload; virtual;
+    procedure Add(const nlist: TDNumberList); overload; virtual;
+    function Delete(const Index: integer): boolean;
+    function IndexOf(const value: integer): integer; virtual;
+    procedure Clear;
+    procedure FastClear;
+    function Sum: integer;
+    property Count: integer read fNumItems;
+    property Numbers[Index: Integer]: integer read Get write Put; default;
+    property List: PIntegerArray read fList;
+  end;
+
 implementation
 
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
@@ -175,6 +199,117 @@ begin
   else
     b.SaveToFile(imgfname);
 end;
+
+////////////////////////////////////////////////////////////////////////////////
+// TDNumberList
+constructor TDNumberList.Create;
+begin
+  fList := nil;
+  fNumItems := 0;
+  fRealNumItems := 0;
+end;
+
+destructor TDNumberList.Destroy;
+begin
+  Clear;
+end;
+
+function TDNumberList.Get(Index: Integer): integer;
+begin
+  if (Index < 0) or (Index >= fNumItems) then
+    result := 0
+  else
+    result := fList[Index];
+end;
+
+procedure TDNumberList.Put(Index: Integer; const value: integer);
+begin
+  fList[Index] := value;
+end;
+
+function TDNumberList.Add(const value: integer): integer;
+var
+  newrealitems: integer;
+begin
+  if fNumItems >= fRealNumItems then
+  begin
+    if fRealNumItems < 8 then
+      newrealitems := 8
+    else if fRealNumItems < 32 then
+      newrealitems := 32
+    else if fRealNumItems < 128 then
+      newrealitems := fRealNumItems + 32
+    else
+      newrealitems := fRealNumItems + 64;
+    ReallocMem(fList, newrealitems * SizeOf(integer));
+    fRealNumItems := newrealitems;
+  end;
+  Put(fNumItems, value);
+  result := fNumItems;
+  inc(fNumItems);
+end;
+
+procedure TDNumberList.Add(const nlist: TDNumberList);
+var
+  i: integer;
+begin
+  for i := 0 to nlist.Count - 1 do
+    Add(nlist[i]);
+end;
+
+function TDNumberList.Delete(const Index: integer): boolean;
+var
+  i: integer;
+begin
+  if (Index < 0) or (Index >= fNumItems) then
+  begin
+    result := false;
+    exit;
+  end;
+
+  for i := Index + 1 to fNumItems - 1 do
+    fList[i - 1] := fList[i];
+
+  dec(fNumItems);
+
+  result := true;
+end;
+
+function TDNumberList.IndexOf(const value: integer): integer;
+var
+  i: integer;
+begin
+  for i := 0 to fNumItems - 1 do
+    if fList[i] = value then
+    begin
+      result := i;
+      exit;
+    end;
+  result := -1;
+end;
+
+procedure TDNumberList.Clear;
+begin
+  ReallocMem(fList, 0);
+  fList := nil;
+  fNumItems := 0;
+  fRealNumItems := 0;
+end;
+
+procedure TDNumberList.FastClear;
+begin
+  fNumItems := 0;
+end;
+
+function TDNumberList.Sum: integer;
+var
+  i: integer;
+begin
+  result := 0;
+  for i := 0 to fNumItems - 1 do
+    result := result + fList[i];
+end;
+////////////////////////////////////////////////////////////////////////////////
 
 end.
 
