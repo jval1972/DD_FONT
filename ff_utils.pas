@@ -95,6 +95,12 @@ type
     property List: PByteArray read fList;
   end;
 
+type
+  TString = class(TObject)
+    data: string;
+    constructor Create(const adata: string); virtual;
+  end;
+
 implementation
 
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
@@ -432,6 +438,16 @@ procedure TDByteList.FastClear;
 begin
   fNumItems := 0;
 end;
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//  = class(TObject)
+constructor TString.Create(const adata: string);
+begin
+  data := adata;
+  inherited Create;
+end;
+////////////////////////////////////////////////////////////////////////////////
 
 end.
 
