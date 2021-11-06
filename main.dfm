@@ -3272,20 +3272,22 @@ object Form1: TForm1
       TabOrder = 0
     end
     object FixedPitchCheckBox: TCheckBox
-      Left = 16
+      Left = 8
       Top = 40
       Width = 97
       Height = 17
+      Hint = 'Set fixed pitch to font'
       Caption = 'Fixed Pitch'
       TabOrder = 1
     end
     object PaletteRadioGroup: TRadioGroup
-      Left = 16
+      Left = 8
       Top = 88
-      Width = 305
+      Width = 321
       Height = 129
       Caption = ' Palette '
       Columns = 2
+      ItemIndex = 0
       Items.Strings = (
         'Doom/Doom2'
         'Heretic'
@@ -3297,42 +3299,45 @@ object Form1: TForm1
       TabOrder = 3
     end
     object PerlinNoiseCheckBox: TCheckBox
-      Left = 16
+      Left = 8
       Top = 64
       Width = 97
       Height = 17
+      Hint = 'Add perlin noise to font'
       Caption = 'Add Perlin Noise'
       TabOrder = 2
     end
     object ChooseOtherPalettePanel: TPanel
       Left = 168
       Top = 184
-      Width = 145
+      Width = 153
       Height = 25
       BevelOuter = bvNone
       Caption = ' '
       TabOrder = 4
       object LoadPaletteSpeedButton: TSpeedButton
-        Left = 120
+        Left = 128
         Top = 0
         Width = 23
         Height = 22
+        Hint = 'Select external palette'
         Caption = '...'
         Flat = True
         OnClick = LoadPaletteSpeedButtonClick
       end
       object OtherPaletteEdit: TEdit
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 113
+        Width = 129
         Height = 21
         TabOrder = 0
+        OnChange = OtherPaletteEditChange
       end
     end
     object ExportPageControl: TPageControl
       Left = 8
       Top = 248
-      Width = 321
+      Width = 329
       Height = 265
       ActivePage = TabSheet1
       Style = tsFlatButtons

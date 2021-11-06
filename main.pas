@@ -177,6 +177,7 @@ type
     procedure ExportImage1Click(Sender: TObject);
     procedure Openexternalfont1Click(Sender: TObject);
     procedure LoadPaletteSpeedButtonClick(Sender: TObject);
+    procedure OtherPaletteEditChange(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -1084,6 +1085,14 @@ procedure TForm1.LoadPaletteSpeedButtonClick(Sender: TObject);
 begin
   if OpenPaletteDialog.Execute then
     OtherPaletteEdit.Text := OpenPaletteDialog.FileName;
+end;
+
+procedure TForm1.OtherPaletteEditChange(Sender: TObject);
+begin
+  if Trim(OtherPaletteEdit.Text) = '' then
+    OtherPaletteEdit.Hint := 'External palette'
+  else
+    OtherPaletteEdit.Hint := OtherPaletteEdit.Text;
 end;
 
 end.
