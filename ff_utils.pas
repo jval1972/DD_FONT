@@ -102,7 +102,9 @@ type
   end;
 
 function remove_spaces(const str: string): string;
-  
+
+function IntToStrZfill(const z: integer; const x: integer): string;
+
 implementation
 
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
@@ -459,6 +461,17 @@ begin
   for x := 1 to Length(str) do
     if str[i] <> ' ' then
       Result := Result + str[i];
+end;
+
+function IntToStrZfill(const z: integer; const x: integer): string;
+var
+  i: integer;
+  len: integer;
+begin
+  Result := IntToStr(x);
+  len := Length(Result);
+  for i := len + 1 to z do
+    Result := '0' + Result;
 end;
 
 end.
