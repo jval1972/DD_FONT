@@ -71,6 +71,28 @@ type
     property List: PIntegerArray read fList;
   end;
 
+type
+  TDByteList = class
+  private
+    fList: PByteArray;
+    fNumItems: integer;
+    fRealNumItems: integer;
+  protected
+    function Get(Index: Integer): byte; virtual;
+    procedure Put(Index: Integer; const value: byte); virtual;
+  public
+    constructor Create; virtual;
+    destructor Destroy; override;
+    function Add(const value: byte): integer; overload; virtual;
+    function Delete(const Index: integer): boolean;
+    function IndexOf(const value: byte): integer; virtual;
+    procedure Clear;
+    procedure FastClear;
+    property Count: integer read fNumItems;
+    property Bytes[Index: Integer]: byte read Get write Put; default;
+    property List: PByteArray read fList;
+  end;
+
 implementation
 
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
@@ -310,6 +332,99 @@ begin
     result := result + fList[i];
 end;
 ////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// TDByteList
+constructor TDByteList.Create;
+begin
+  fList := nil;
+  fNumItems := 0;
+  fRealNumItems := 0;
+end;
+
+destructor TDByteList.Destroy;
+begin
+  Clear;
+end;
+
+function TDByteList.Get(Index: Integer): byte;
+begin
+  if (Index < 0) or (Index >= fNumItems) then
+    result := 0
+  else
+    result := fList[Index];
+end;
+
+procedure TDByteList.Put(Index: Integer; const value: byte);
+begin
+  fList[Index] := value;
+end;
+
+function TDByteList.Add(const value: byte): integer;
+var
+  newrealitems: integer;
+begin
+  if fNumItems >= fRealNumItems then
+  begin
+    if fRealNumItems < 8 then
+      newrealitems := 8
+    else if fRealNumItems < 32 then
+      newrealitems := 32
+    else if fRealNumItems < 128 then
+      newrealitems := fRealNumItems + 32
+    else
+      newrealitems := fRealNumItems + 64;
+    ReallocMem(fList, newrealitems * SizeOf(byte));
+    fRealNumItems := newrealitems;
+  end;
+  Put(fNumItems, value);
+  result := fNumItems;
+  inc(fNumItems);
+end;
+
+function TDByteList.Delete(const Index: integer): boolean;
+var
+  i: integer;
+begin
+  if (Index < 0) or (Index >= fNumItems) then
+  begin
+    result := false;
+    exit;
+  end;
+
+  for i := Index + 1 to fNumItems - 1 do
+    fList[i - 1] := fList[i];
+
+  dec(fNumItems);
+
+  result := true;
+end;
+
+function TDByteList.IndexOf(const value: byte): integer;
+var
+  i: integer;
+begin
+  for i := 0 to fNumItems - 1 do
+    if fList[i] = value then
+    begin
+      result := i;
+      exit;
+    end;
+  result := -1;
+end;
+
+procedure TDByteList.Clear;
+begin
+  ReallocMem(fList, 0);
+  fList := nil;
+  fNumItems := 0;
+  fRealNumItems := 0;
+end;
+
+procedure TDByteList.FastClear;
+begin
+  fNumItems := 0;
+end;
 
 end.
 
