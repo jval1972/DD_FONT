@@ -459,8 +459,8 @@ var
 begin
   Result := '';
   for x := 1 to Length(str) do
-    if str[i] <> ' ' then
-      Result := Result + str[i];
+    if str[x] <> ' ' then
+      Result := Result + str[x];
 end;
 
 function IntToStrZfill(const z: integer; const x: integer): string;
