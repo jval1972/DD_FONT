@@ -3279,12 +3279,13 @@ object Form1: TForm1
       Hint = 'Set fixed pitch to font'
       Caption = 'Fixed Pitch'
       TabOrder = 1
+      OnClick = FixedPitchCheckBoxClick
     end
     object PaletteRadioGroup: TRadioGroup
       Left = 8
-      Top = 88
+      Top = 80
       Width = 321
-      Height = 129
+      Height = 121
       Caption = ' Palette '
       Columns = 2
       ItemIndex = 0
@@ -3300,21 +3301,23 @@ object Form1: TForm1
     end
     object PerlinNoiseCheckBox: TCheckBox
       Left = 8
-      Top = 64
+      Top = 56
       Width = 97
       Height = 17
       Hint = 'Add perlin noise to font'
       Caption = 'Add Perlin Noise'
       TabOrder = 2
+      OnClick = PerlinNoiseCheckBoxClick
     end
     object ChooseOtherPalettePanel: TPanel
       Left = 168
-      Top = 184
+      Top = 168
       Width = 153
       Height = 25
       BevelOuter = bvNone
       Caption = ' '
       TabOrder = 4
+      Visible = False
       object LoadPaletteSpeedButton: TSpeedButton
         Left = 128
         Top = 0
@@ -3330,15 +3333,16 @@ object Form1: TForm1
         Top = 0
         Width = 129
         Height = 21
+        TabStop = False
         TabOrder = 0
         OnChange = OtherPaletteEditChange
       end
     end
     object ExportPageControl: TPageControl
       Left = 8
-      Top = 248
+      Top = 208
       Width = 329
-      Height = 265
+      Height = 225
       ActivePage = TabSheet1
       Style = tsFlatButtons
       TabOrder = 5
@@ -3548,7 +3552,7 @@ object Form1: TForm1
     DefaultExt = 'pal'
     Filter = 'Palette Files (*.pal)|*.pal|All Files (*.*)|*.*'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    Left = 433
-    Top = 216
+    Left = 425
+    Top = 200
   end
 end

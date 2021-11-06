@@ -178,6 +178,8 @@ type
     procedure Openexternalfont1Click(Sender: TObject);
     procedure LoadPaletteSpeedButtonClick(Sender: TObject);
     procedure OtherPaletteEditChange(Sender: TObject);
+    procedure FixedPitchCheckBoxClick(Sender: TObject);
+    procedure PerlinNoiseCheckBoxClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -185,6 +187,7 @@ type
     mousedown: boolean;
     changed: boolean;
     needsupdate: boolean;
+    needsgenerationcontrolsupdate: boolean;
     undoManager: TUndoRedoManager;
     filemenuhistory: TFileMenuHistory;
     ffilename: string;
@@ -211,6 +214,7 @@ type
     function CheckCanClose: boolean;
     procedure SetFileName(const fname: string);
     procedure UpdateControls;
+    procedure UpdateFontGenerationControls;
     procedure DrawGrid;
     procedure OnDrawWidthChange(Sender: TObject);
     procedure OnDrawHeightChange(Sender: TObject);
@@ -273,7 +277,7 @@ begin
   flastzoomwheel := GetTickCount;
 
   ExportPageControl.ActivePageIndex := 0;
-  
+
   ExternalFonts := TStringList.Create;
 
   InstallDoomFont;  // Must be called before filling the FontNamesComboBox and after creating ExternalFonts
@@ -349,6 +353,7 @@ begin
     if DoLoadFromFile(ParamStr(1)) then
       doCreate := False;
 
+  needsgenerationcontrolsupdate := True;
   if docreate then
   begin
     SetFileName('');
@@ -427,6 +432,11 @@ begin
   RedoSpeedButton1.Enabled := undoManager.CanRedo;
   ZoomInSpeedButton1.Enabled := zoom < MAXZOOM;
   ZoomOutSpeedButton1.Enabled := zoom > MINZOOM;
+  if needsupdate or needsgenerationcontrolsupdate then
+  begin
+    UpdateFontGenerationControls;
+    needsgenerationcontrolsupdate := False;
+  end;
   if needsupdate then
   begin
     UpdateControls;
@@ -709,6 +719,11 @@ begin
   DrawHeightSlider.Position := ff.DrawHeight;
   DrawHeightPaintBox.Hint := IntToStr(ff.DrawHeight);
   CharHeightLabel.Caption := Format('Rect Height: %d', [ff.DrawHeight]);
+end;
+
+procedure TForm1.UpdateFontGenerationControls;
+begin
+  ChooseOtherPalettePanel.Visible := PaletteRadioGroup.ItemIndex = 6;
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
@@ -1093,6 +1108,18 @@ begin
     OtherPaletteEdit.Hint := 'External palette'
   else
     OtherPaletteEdit.Hint := OtherPaletteEdit.Text;
+end;
+
+procedure TForm1.FixedPitchCheckBoxClick(Sender: TObject);
+begin
+  opt_FixedPitch := FixedPitchCheckBox.Checked;
+  needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.PerlinNoiseCheckBoxClick(Sender: TObject);
+begin
+  opt_PerlinNoise := PerlinNoiseCheckBox.Checked;
+  needsgenerationcontrolsupdate := True;
 end;
 
 end.
