@@ -101,6 +101,8 @@ type
     constructor Create(const adata: string); virtual;
   end;
 
+function remove_spaces(const str: string): string;
+  
 implementation
 
 function GetIntInRange(const x: Integer; const amin, amax: Integer): Integer;
@@ -448,6 +450,16 @@ begin
   inherited Create;
 end;
 ////////////////////////////////////////////////////////////////////////////////
+
+function remove_spaces(const str: string): string;
+var
+  x: integer;
+begin
+  Result := '';
+  for x := 1 to Length(str) do
+    if str[i] <> ' ' then
+      Result := Result + str[i];
+end;
 
 end.
 
