@@ -3329,6 +3329,26 @@ object Form1: TForm1
         TabOrder = 0
       end
     end
+    object ExportPageControl: TPageControl
+      Left = 8
+      Top = 248
+      Width = 321
+      Height = 265
+      ActivePage = TabSheet1
+      Style = tsFlatButtons
+      TabOrder = 5
+      object TabSheet1: TTabSheet
+        Caption = 'Text String'
+      end
+      object TabSheet2: TTabSheet
+        Caption = 'Font Sequence'
+        ImageIndex = 1
+      end
+      object TabSheet3: TTabSheet
+        Caption = 'Number Sequence'
+        ImageIndex = 2
+      end
+    end
   end
   object MainMenu1: TMainMenu
     Left = 801

@@ -131,6 +131,10 @@ type
     OtherPaletteEdit: TEdit;
     LoadPaletteSpeedButton: TSpeedButton;
     OpenPaletteDialog: TOpenDialog;
+    ExportPageControl: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -267,6 +271,8 @@ begin
 
   flastzoomwheel := GetTickCount;
 
+  ExportPageControl.ActivePageIndex := 0;
+  
   ExternalFonts := TStringList.Create;
 
   InstallDoomFont;  // Must be called before filling the FontNamesComboBox and after creating ExternalFonts
