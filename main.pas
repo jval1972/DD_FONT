@@ -239,6 +239,7 @@ type
     procedure InstallDoomFont;
     procedure sPaletteToControls;
     procedure sPaletteFromControls;
+    procedure DoGenerateWAD;
   public
     { Public declarations }
   end;
@@ -1242,6 +1243,24 @@ begin
 end;
 
 procedure TForm1.GenerateSpeedButtonClick(Sender: TObject);
+begin
+  if not SaveWADDialog.Execute then
+    Exit;
+
+  UpdateFontGenerationControls;
+
+  if not GenerateSpeedButton.Enabled then
+    Exit;
+
+  Screen.Cursor := crHourGlass;
+  try
+    DoGenerateWAD;
+  finally
+    Screen.Cursor := crDefault;
+  end;
+end;
+
+procedure TForm1.DoGenerateWAD;
 var
   sl: TStringList;
   i: integer;
@@ -1252,14 +1271,6 @@ var
   sz: Integer;
   m: TMemoryStream;
 begin
-  if not SaveWADDialog.Execute then
-    Exit;
-
-  UpdateFontGenerationControls;
-
-  if not GenerateSpeedButton.Enabled then
-    Exit;
-
   sl := TStringList.Create;
   case ExportPageControl.ActivePageIndex of
     0: sl.AddObject(TextExportEdit.Text, TString.Create(remove_spaces(TextExportEdit.Text)));
