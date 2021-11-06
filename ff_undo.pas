@@ -367,8 +367,8 @@ end;
 destructor TUndoRedoManager.Destroy;
 begin
   Clear;
-  UndoStack.Free; UndoStack := nil;
-  RedoStack.Free; RedoSTack := nil;
+  UndoStack.Free;
+  RedoStack.Free;
   Inherited;
 end;
 
