@@ -50,7 +50,8 @@ uses
   ff_tmp in 'ff_tmp.pas',
   ff_palettes in 'ff_palettes.pas',
   ff_wad in 'ff_wad.pas',
-  ff_wadwriter in 'ff_wadwriter.pas';
+  ff_wadwriter in 'ff_wadwriter.pas',
+  ff_patch in 'ff_patch.pas';
 
 {$R *.res}
 
