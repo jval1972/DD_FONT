@@ -143,6 +143,8 @@ type
     NumberSequencePrefixEdit: TEdit;
     PreviewGroupBox: TGroupBox;
     PreviewImage: TImage;
+    SaveWADDialog: TSaveDialog;
+    GenerateSpeedButton: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -193,6 +195,7 @@ type
     procedure TextExportEditChange(Sender: TObject);
     procedure FontSequencePrefixEditChange(Sender: TObject);
     procedure NumberSequencePrefixEditChange(Sender: TObject);
+    procedure GenerateSpeedButtonClick(Sender: TObject);
   private
     { Private declarations }
     buffer: TBitmap;
@@ -248,7 +251,10 @@ implementation
 {$R *.dfm}
 
 uses
-  ff_utils, ff_defs, ff_doomfont, ff_tmp, ff_palettes;
+  ff_utils, ff_defs, ff_doomfont, ff_tmp, ff_palettes, ff_wadwriter, ff_export;
+
+var
+  finitialized: boolean = False;
 
 function EnumFontsProc(var LogFont: TLogFont; var TextMetric: TTextMetric;
   FontType: Integer; Data: Pointer): Integer; stdcall;
@@ -364,6 +370,9 @@ begin
   FontSequencePrefixEdit.Text := bigstringtostring(@opt_FontSequencePrefix);
   NumberSequencePrefixEdit.Text := bigstringtostring(@opt_NumberSequencePrefix);
 
+  ff.FontSize := opt_FontSize;
+  ff.FontName := bigstringtostring(@opt_FontName);
+
   fList := TStringList.Create;
   CollectFonts(fList);
   for i := 0 to fList.Count -1 do
@@ -388,6 +397,8 @@ begin
 
   Application.OnIdle := Idle;
   Application.OnHint := Hint;
+
+  finitialized := True;
 end;
 
 procedure TForm1.PaintBox1Paint(Sender: TObject);
@@ -424,6 +435,8 @@ begin
   stringtobigstring(TextExportEdit.Text, @opt_TextExport);
   stringtobigstring(FontSequencePrefixEdit.Text, @opt_FontSequencePrefix);
   stringtobigstring(NumberSequencePrefixEdit.Text, @opt_NumberSequencePrefix);
+  opt_FontSize := ff.FontSize;
+  stringtobigstring(ff.FontName, @opt_FontName);
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 
@@ -453,6 +466,9 @@ end;
 
 procedure TForm1.UpdateEnable;
 begin
+  if not finitialized then
+    Exit;
+
   Undo1.Enabled := undoManager.CanUndo;
   Redo1.Enabled := undoManager.CanRedo;
   UndoSpeedButton1.Enabled := undoManager.CanUndo;
@@ -510,6 +526,9 @@ end;
 
 procedure TForm1.InvalidatePaintBox;
 begin
+  if not finitialized then
+    Exit;
+
   ff.DrawToBitmap(buffer);
   CreateDrawBuffer;
   PaintBox1.Width := drawbuffer.Width;
@@ -758,6 +777,7 @@ begin
     1: ff.DrawStringToBitmap(PreviewImage.Picture.Bitmap, '!@#$%+-AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz', FixedPitchCheckBox.Checked);
     2: ff.DrawStringToBitmap(PreviewImage.Picture.Bitmap, '1234567890', FixedPitchCheckBox.Checked);
   end;
+  GenerateSpeedButton.Enabled := (ExportPageControl.ActivePageIndex <> 0) or (remove_spaces(TextExportEdit.Text) <> '');
 end;
 
 procedure TForm1.BoldSpeedButtonClick(Sender: TObject);
@@ -1113,7 +1133,7 @@ var
   p: PChar;
   m: TMemoryStream;
 begin
-  tmpfile := I_NewTempFile('doom.ttf');
+  tmpfile := I_NewTempFile('doom_' + IntToStr(GetTickCount) + '.ttf');
 
   m := TMemoryStream.Create;
   try
@@ -1219,6 +1239,79 @@ begin
   else
     sPalette := spalOTHER;
   end;
+end;
+
+procedure TForm1.GenerateSpeedButtonClick(Sender: TObject);
+var
+  sl: TStringList;
+  i: integer;
+  ch: char;
+  spal: string;
+  wad: TWadWriter;
+  p: Pointer;
+  sz: Integer;
+  m: TMemoryStream;
+begin
+  if not SaveWADDialog.Execute then
+    Exit;
+
+  UpdateFontGenerationControls;
+
+  if not GenerateSpeedButton.Enabled then
+    Exit;
+
+  sl := TStringList.Create;
+  case ExportPageControl.ActivePageIndex of
+    0: sl.AddObject(TextExportEdit.Text, TString.Create(remove_spaces(TextExportEdit.Text)));
+    1:
+      begin
+        for ch := #33 to #127 do
+          sl.AddObject(ch, TString.Create(FontSequencePrefixEdit.Text + IntToStrZFill(3, Ord(ch))));
+      end;
+    2:
+      begin
+        for ch := '0' to '9' do
+          sl.AddObject(ch, TString.Create(NumberSequencePrefixEdit.Text + ch));
+      end;
+  else
+    Exit;
+  end;
+
+  if sPalette = spalOTHER then
+    spal := OtherPaletteEdit.Text
+  else
+    spal := sPalette;
+
+
+  wad := TWadWriter.Create;
+
+  m := TMemoryStream.Create;
+  try
+    ff.SaveToStream(m);
+    wad.AddData('DDFONT', m.Memory, m.Size);
+  finally
+    m.Free;
+  end;
+
+  for i := 0 to sl.Count - 1 do
+  begin
+    FF_ExportFont(ff, spal, sl.Strings[i], FixedPitchCheckBox.Checked,
+      PerlinNoiseCheckBox.Checked, False, 0, 3, p, sz);
+    if sz > 0 then
+    begin
+      wad.AddData((sl.Objects[i] as TString).data, p, sz);
+      FreeMem(p, sz);
+    end;
+  end;
+
+  BackupFile(SaveWADDialog.FileName);
+  wad.SaveToFile(SaveWADDialog.FileName);
+
+  wad.Free;
+
+  for i := 0 to sl.Count - 1 do
+    sl.Objects[i].Free;
+  sl.Free;
 end;
 
 end.

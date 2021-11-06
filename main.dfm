@@ -3262,6 +3262,15 @@ object Form1: TForm1
     Height = 553
     Align = alLeft
     TabOrder = 4
+    object GenerateSpeedButton: TSpeedButton
+      Left = 8
+      Top = 360
+      Width = 321
+      Height = 22
+      Hint = 'Generate a WAD file with the font patches'
+      Caption = 'Generate...'
+      OnClick = GenerateSpeedButtonClick
+    end
     object Panel1: TPanel
       Left = 1
       Top = 1
@@ -3424,14 +3433,14 @@ object Form1: TForm1
       Left = 8
       Top = 296
       Width = 322
-      Height = 65
+      Height = 57
       Caption = ' Preview '
       TabOrder = 6
       object PreviewImage: TImage
         Left = 1
         Top = 16
         Width = 320
-        Height = 41
+        Height = 33
         Picture.Data = {
           07544269746D617066000000424D660000000000000036000000280000000400
           000004000000010018000000000030000000330B0000330B0000000000000000
@@ -3441,7 +3450,7 @@ object Form1: TForm1
     end
   end
   object MainMenu1: TMainMenu
-    Left = 801
+    Left = 841
     Top = 113
     object File1: TMenuItem
       Caption = 'File'
@@ -3605,12 +3614,12 @@ object Form1: TForm1
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    Left = 761
+    Left = 801
     Top = 112
   end
   object ColorDialog1: TColorDialog
     Options = [cdFullOpen]
-    Left = 720
+    Left = 760
     Top = 112
   end
   object SavePictureDialog1: TSavePictureDialog
@@ -3619,7 +3628,7 @@ object Form1: TForm1
       'PNG Images (*.png)|*.png|JPEG Image (*.jpg)|*.jpg|Bitmaps (*.bmp' +
       ')|*.bmp'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
-    Left = 681
+    Left = 721
     Top = 113
   end
   object OpenDialog2: TOpenDialog
@@ -3635,5 +3644,12 @@ object Form1: TForm1
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 425
     Top = 200
+  end
+  object SaveWADDialog: TSaveDialog
+    DefaultExt = 'wad'
+    Filter = 'WAD Files (*.wad)|*.wad|All Files (*.*)|*.*'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
+    Left = 681
+    Top = 112
   end
 end
