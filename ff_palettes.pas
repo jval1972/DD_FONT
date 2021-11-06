@@ -37,6 +37,7 @@ const
   spalSTRIFE = 'STRIFE';
   spalRADIX = 'RADIX';
   spalGLSPEED = 'GLSPEED';
+  spalOTHER = 'OTHER';
 
 type
   rawpalette_t = packed array[0..767] of Byte;

@@ -210,6 +210,7 @@ type
     DrawWidthSlider: TSliderHook;
     DrawHeightSlider: TSliderHook;
     ExternalFonts: TStringList;
+    sPalette: string;
     procedure Idle(Sender: TObject; var Done: Boolean);
     procedure Hint(Sender: TObject);
     procedure UpdateEnable(const force: Boolean = False);
@@ -233,6 +234,8 @@ type
     procedure OnDrawHeightChange(Sender: TObject);
     procedure InstallExternalFont(const ttffile: string);
     procedure InstallDoomFont;
+    procedure sPaletteToControls;
+    procedure sPaletteFromControls;
   public
     { Public declarations }
   end;
@@ -245,7 +248,7 @@ implementation
 {$R *.dfm}
 
 uses
-  ff_utils, ff_defs, ff_doomfont, ff_tmp;
+  ff_utils, ff_defs, ff_doomfont, ff_tmp, ff_palettes;
 
 function EnumFontsProc(var LogFont: TLogFont; var TextMetric: TTextMetric;
   FontType: Integer; Data: Pointer): Integer; stdcall;
@@ -353,6 +356,8 @@ begin
 
   FixedPitchCheckBox.Checked := opt_FixedPitch;
   PerlinNoiseCheckBox.Checked := opt_PerlinNoise;
+  sPalette := bigstringtostring(@opt_Palette);
+  sPaletteToControls;
   OtherPaletteEdit.Text := bigstringtostring(@opt_ExternalPalette);
 
   TextExportEdit.Text := bigstringtostring(@opt_TextExport);
@@ -413,6 +418,8 @@ begin
   opt_DrawHeight := Round(DrawHeightSlider.Position);
   opt_FixedPitch := FixedPitchCheckBox.Checked;
   opt_PerlinNoise := PerlinNoiseCheckBox.Checked;
+  sPaletteFromControls;
+  stringtobigstring(sPalette, @opt_Palette);
   stringtobigstring(OtherPaletteEdit.Text, @opt_ExternalPalette);
   stringtobigstring(TextExportEdit.Text, @opt_TextExport);
   stringtobigstring(FontSequencePrefixEdit.Text, @opt_FontSequencePrefix);
@@ -1152,6 +1159,7 @@ end;
 
 procedure TForm1.PaletteRadioGroupClick(Sender: TObject);
 begin
+  sPaletteFromControls;
   needsgenerationcontrolsupdate := True;
 end;
 
@@ -1173,6 +1181,44 @@ end;
 procedure TForm1.NumberSequencePrefixEditChange(Sender: TObject);
 begin
   needsgenerationcontrolsupdate := True;
+end;
+
+procedure TForm1.sPaletteToControls;
+begin
+  if sPalette = '' then
+    sPalette := spalDOOM;
+
+  if sPalette = spalDOOM then
+    PaletteRadioGroup.ItemIndex := 0
+  else if sPalette = spalHERETIC then
+    PaletteRadioGroup.ItemIndex := 1
+  else if sPalette = spalHEXEN then
+    PaletteRadioGroup.ItemIndex := 2
+  else if sPalette = spalSTRIFE then
+    PaletteRadioGroup.ItemIndex := 3
+  else if sPalette = spalRADIX then
+    PaletteRadioGroup.ItemIndex := 4
+  else if sPalette = spalGLSPEED then
+    PaletteRadioGroup.ItemIndex := 5
+  else
+  begin
+    sPalette := spalOTHER;
+    PaletteRadioGroup.ItemIndex := 6;
+  end;
+end;
+
+procedure TForm1.sPaletteFromControls;
+begin
+  case PaletteRadioGroup.ItemIndex of
+    0: sPalette := spalDOOM;
+    1: sPalette := spalHERETIC;
+    2: sPalette := spalHEXEN;
+    3: sPalette := spalSTRIFE;
+    4: sPalette := spalRADIX;
+    5: sPalette := spalGLSPEED;
+  else
+    sPalette := spalOTHER;
+  end;
 end;
 
 end.
