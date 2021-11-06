@@ -671,7 +671,7 @@ begin
   StrikeOutSpeedButton.Down := fsStrikeOut in ff.Style;
   FontNamesComboBox.ItemIndex := FontNamesComboBox.Items.IndexOf(ff.FontName);
   FontSizeLabel.Caption := IntToStr(ff.FontSize);
-  WidthInfoLabel.Caption := Format('Image Size: %dx%d   Character Size: %dx%d',
+  WidthInfoLabel.Caption := Format('Image Size: %dx%d   Character Rect Size: %dx%d',
     [
       ff.GridWidth * ff.DrawWidth,
       ff.GridHeight * ff.DrawHeight,
