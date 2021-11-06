@@ -57,6 +57,8 @@ var
   opt_filemenuhistory9: bigstring_t;
   opt_showgrid: boolean = False;
   opt_zoom: integer = 0;
+  opt_FontSize: integer = 8;
+  opt_FontName: bigstring_t;
   opt_DrawWidth: integer = 16;
   opt_DrawHeight: integer = 16;
   opt_FixedPitch: Boolean = False;
@@ -86,7 +88,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 24;
+  NUMSETTINGS = 26;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -174,6 +176,16 @@ var
       desc: '[Generate Font Options]';
       typeof: tstDevider;
       location: nil;
+    ),
+    (
+      desc: 'FONTSIZE';
+      typeof: tstInteger;
+      location: @opt_FontSize;
+    ),
+    (
+      desc: 'FONTNAME';
+      typeof: tstBigString;
+      location: @opt_FontName;
     ),
     (
       desc: 'FIXEDPITCH';
@@ -359,6 +371,7 @@ initialization
   stringtobigstring('Doom Font Creator', @opt_TextExport);
   stringtobigstring('STCFN', @opt_FontSequencePrefix);
   stringtobigstring('STTNUM', @opt_NumberSequencePrefix);
+  stringtobigstring('Doom', @opt_FontName);
 
 end.
 
