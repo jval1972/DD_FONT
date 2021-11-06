@@ -377,6 +377,8 @@ begin
   ff.Italic := opt_Italic;
   ff.Underline := opt_Underline;
   ff.StrikeOut := opt_StrikeOut;
+  ff.FrontColor := opt_FgColor;
+  ff.BackColor := opt_BkColor;
 
   fList := TStringList.Create;
   CollectFonts(fList);
@@ -446,6 +448,8 @@ begin
   opt_Italic := ff.Italic;
   opt_Underline := ff.Underline;
   opt_StrikeOut := ff.StrikeOut;
+  opt_FgColor := ff.FrontColor;
+  opt_BkColor := ff.BackColor;
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 

@@ -63,6 +63,8 @@ var
   opt_Italic: Boolean = False;
   opt_Underline: Boolean = False;
   opt_StrikeOut: Boolean = False;
+  opt_FgColor: integer = $FFFFFF;
+  opt_BkColor: integer = 0;
   opt_DrawWidth: integer = 16;
   opt_DrawHeight: integer = 16;
   opt_FixedPitch: Boolean = False;
@@ -92,7 +94,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 30;
+  NUMSETTINGS = 32;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -210,6 +212,16 @@ var
       desc: 'STRIKEOUT';
       typeof: tstBoolean;
       location: @opt_StrikeOut;
+    ),
+    (
+      desc: 'FGCOLOR';
+      typeof: tstInteger;
+      location: @opt_FgColor;
+    ),
+    (
+      desc: 'BKCOLOR';
+      typeof: tstInteger;
+      location: @opt_BkColor;
     ),
     (
       desc: 'FIXEDPITCH';
