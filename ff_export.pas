@@ -45,6 +45,7 @@ uses
 
 const
   MAXPATCHWIDTH = 320;
+  COLORTHRESHOLD = 16;
 
 type
   TBitmapLine = array[0..MAXPATCHWIDTH - 1] of LongWord;
@@ -78,12 +79,12 @@ var
   l: PBitmapLine;
   img: PByteArray;
   i: integer;
-  c: LongWord;
   gray, invgray: byte;
   bkR, bkG, bkB: LongWord;
   fgR, fgG, fgB: LongWord;
   r, g, b: LongWord;
   pnoise: Double;
+  mx: LongWord;
 
   function Interpolate(const a, b, frac: double): double;
   begin
@@ -202,6 +203,28 @@ begin
   GetMem(img, bm.Width * bm.Height);
   ZeroMemory(img, bm.Width * bm.Height);
 
+  // Convert to Grayscale and find the maximum color value of the image
+  mx := 0;
+  for y := 0 to bm.Height - 1 do
+  begin
+    l := bm.ScanLine[y];
+    for x := 0 to bm.Width - 1 do
+    begin
+      l[x] := Grayscale(l[x]);
+      if l[x] and $FF > mx then
+        mx := l[x] and $FF;
+    end;
+  end;
+
+  // Stretch image color to max
+  if (mx < 255) and (mx > 0) then
+    for y := 0 to bm.Height - 1 do
+    begin
+      l := bm.ScanLine[y];
+      for x := 0 to bm.Width - 1 do
+        l[x] := GetIntInRange(Round(l[x] * 255 / mx), 0, 255);
+    end;
+
   // Convert to image palette
   i := 0;
   for y := 0 to bm.Height - 1 do
@@ -209,9 +232,8 @@ begin
     l := bm.ScanLine[y];
     for x := 0 to bm.Width - 1 do
     begin
-      c := Grayscale(l[x]);
-      gray := c and $FF;
-      if gray <> 0 then
+      gray := l[x] and $FF;
+      if gray > COLORTHRESHOLD then
       begin
         invgray := 255 - gray;
         if perlin_noise then
@@ -227,7 +249,7 @@ begin
           g := GetIntInRange(Round(bkG * invgray / 255 + fgG * gray / 255), 0, 255);
           b := GetIntInRange(Round(bkB * invgray / 255 + fgB * gray / 255), 0, 255);
         end;
-        img[i] := FF_FindAproxColorIndex(@DispCallByIDProc, RGB(r, g, b), start, finish);
+        img[i] := FF_FindAproxColorIndex(@dpal, RGB(r, g, b), start, finish);
       end;
       Inc(i);
     end;

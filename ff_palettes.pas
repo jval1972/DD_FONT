@@ -506,9 +506,9 @@ begin
   pb := rowpal;
   for i := 0 to 255 do
   begin
-    b := pb^; inc(pb);
-    g := pb^; inc(pb);
     r := pb^; inc(pb);
+    g := pb^; inc(pb);
+    b := pb^; inc(pb);
     palette[i] := RGB(r, g, b);
   end;
 end;

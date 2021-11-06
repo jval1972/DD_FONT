@@ -115,7 +115,7 @@ begin
       columndata.FastClear;
       for y := 0 to height - 1 do
       begin
-        c := img[x * height + y];
+        c := img[x + y * width];
         if not solid then
           if c = 0 then
           begin
