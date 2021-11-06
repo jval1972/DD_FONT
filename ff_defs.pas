@@ -59,6 +59,10 @@ var
   opt_zoom: integer = 0;
   opt_FontSize: integer = 8;
   opt_FontName: bigstring_t;
+  opt_Bold: Boolean = False;
+  opt_Italic: Boolean = False;
+  opt_Underline: Boolean = False;
+  opt_StrikeOut: Boolean = False;
   opt_DrawWidth: integer = 16;
   opt_DrawHeight: integer = 16;
   opt_FixedPitch: Boolean = False;
@@ -88,7 +92,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 26;
+  NUMSETTINGS = 30;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -186,6 +190,26 @@ var
       desc: 'FONTNAME';
       typeof: tstBigString;
       location: @opt_FontName;
+    ),
+    (
+      desc: 'BOLD';
+      typeof: tstBoolean;
+      location: @opt_Bold;
+    ),
+    (
+      desc: 'ITALIC';
+      typeof: tstBoolean;
+      location: @opt_Italic;
+    ),
+    (
+      desc: 'UNDERLINE';
+      typeof: tstBoolean;
+      location: @opt_Underline;
+    ),
+    (
+      desc: 'STRIKEOUT';
+      typeof: tstBoolean;
+      location: @opt_StrikeOut;
     ),
     (
       desc: 'FIXEDPITCH';

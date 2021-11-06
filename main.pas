@@ -373,6 +373,10 @@ begin
 
   ff.FontSize := opt_FontSize;
   ff.FontName := bigstringtostring(@opt_FontName);
+  ff.Bold := opt_Bold;
+  ff.Italic := opt_Italic;
+  ff.Underline := opt_Underline;
+  ff.StrikeOut := opt_StrikeOut;
 
   fList := TStringList.Create;
   CollectFonts(fList);
@@ -438,6 +442,10 @@ begin
   stringtobigstring(NumberSequencePrefixEdit.Text, @opt_NumberSequencePrefix);
   opt_FontSize := ff.FontSize;
   stringtobigstring(ff.FontName, @opt_FontName);
+  opt_Bold := ff.Bold;
+  opt_Italic := ff.Italic;
+  opt_Underline := ff.Underline;
+  opt_StrikeOut := ff.StrikeOut;
 
   ff_SaveSettingsToFile(ChangeFileExt(ParamStr(0), '.ini'));
 

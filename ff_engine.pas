@@ -53,6 +53,14 @@ type
     fGridWidth: Integer;
     fGridHeight: Integer;
     function RightCropLetterBitmap(const bm: TBitmap): boolean;
+    function GetIsBold: Boolean;
+    procedure SetIsBold(const v: Boolean);
+    function GetIsItalic: Boolean;
+    procedure SetIsItalic(const v: Boolean);
+    function GetIsUnderline: Boolean;
+    procedure SetIsUnderline(const v: Boolean);
+    function GetIsStrikeOut: Boolean;
+    procedure SetIsStrikeOut(const v: Boolean);
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -81,6 +89,10 @@ type
     property BackColor: LongWord read fBackColor write fBackColor;
     property GridWidth: Integer read fGridWidth write fGridWidth;
     property GridHeight: Integer read fGridHeight write fGridHeight;
+    property Bold: Boolean read GetIsBold write SetIsBold;
+    property Italic: Boolean read GetIsItalic write SetIsItalic;
+    property Underline: Boolean read GetIsUnderline write SetIsUnderline;
+    property StrikeOut: Boolean read GetIsStrikeOut write SetIsStrikeOut;
   end;
 
 
@@ -491,6 +503,58 @@ begin
   fBackColor := ff.BackColor;
   fGridWidth := ff.GridWidth;
   fGridHeight := ff.GridHeight;
+end;
+
+function TFontEngine.GetIsBold: Boolean;
+begin
+  Result := fsBold in fStyle;
+end;
+
+procedure TFontEngine.SetIsBold(const v: Boolean);
+begin
+  if v then
+    Include(fStyle, fsBold)
+  else
+    Exclude(fStyle, fsBold);
+end;
+
+function TFontEngine.GetIsItalic: Boolean;
+begin
+  Result := fsItalic in fStyle;
+end;
+
+procedure TFontEngine.SetIsItalic(const v: Boolean);
+begin
+  if v then
+    Include(fStyle, fsItalic)
+  else
+    Exclude(fStyle, fsItalic);
+end;
+
+function TFontEngine.GetIsUnderline: Boolean;
+begin
+  Result := fsUnderline in fStyle;
+end;
+
+procedure TFontEngine.SetIsUnderline(const v: Boolean);
+begin
+  if v then
+    Include(fStyle, fsUnderline)
+  else
+    Exclude(fStyle, fsUnderline);
+end;
+
+function TFontEngine.GetIsStrikeOut: Boolean;
+begin
+  Result := fsStrikeOut in fStyle;
+end;
+
+procedure TFontEngine.SetIsStrikeOut(const v: Boolean);
+begin
+  if v then
+    Include(fStyle, fsStrikeOut)
+  else
+    Exclude(fStyle, fsStrikeOut);
 end;
 
 end.
