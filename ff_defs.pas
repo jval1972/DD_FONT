@@ -59,6 +59,9 @@ var
   opt_zoom: integer = 0;
   opt_DrawWidth: integer = 16;
   opt_DrawHeight: integer = 16;
+  opt_FixedPitch: Boolean = False;
+  opt_PerlinNoise: Boolean = False;
+  opt_Palette: bigstring_t;
 
 function bigstringtostring(const bs: bigstring_p): string;
 
@@ -79,7 +82,7 @@ type
   end;
 
 const
-  NUMSETTINGS = 16;
+  NUMSETTINGS = 20;
 
 var
   Settings: array[0..NUMSETTINGS - 1] of TSettingItem = (
@@ -139,7 +142,7 @@ var
       location: @opt_filemenuhistory9;
     ),
     (
-      desc: '[Options]';
+      desc: '[General Options]';
       typeof: tstDevider;
       location: nil;
     ),
@@ -162,6 +165,26 @@ var
       desc: 'DRAWHEIGHT';
       typeof: tstInteger;
       location: @opt_DrawHeight;
+    ),
+    (
+      desc: '[Generate Font Options]';
+      typeof: tstDevider;
+      location: nil;
+    ),
+    (
+      desc: 'FIXEDPITCH';
+      typeof: tstBoolean;
+      location: @opt_FixedPitch;
+    ),
+    (
+      desc: 'PERLINNOISE';
+      typeof: tstBoolean;
+      location: @opt_PerlinNoise;
+    ),
+    (
+      desc: 'PALETTE';
+      typeof: tstBigString;
+      location: @opt_Palette;
     )
   );
 
