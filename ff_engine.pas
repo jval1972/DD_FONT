@@ -61,7 +61,7 @@ type
     procedure DrawToBitmap(const bm: TBitmap);
     procedure DrawCharToCanvas(const C: TCanvas; const ch: Char);
     procedure DrawCharToBitmap(const bm: TBitmap; const ch: Char);
-    procedure DrawStringToBitmap(const bm: TBitmap; const s: string; const fixed_pitch: boolean);
+    function DrawStringToBitmap(const bm: TBitmap; const s: string; const fixed_pitch: boolean): Integer;
     procedure FromFont(const fnt: TFont);
     procedure ToFont(const fnt: TFont);
     procedure SaveToStream(const strm: TStream);
@@ -272,7 +272,7 @@ begin
   FreeMem(inds);
 end;
 
-procedure TFontEngine.DrawStringToBitmap(const bm: TBitmap; const s: string; const fixed_pitch: boolean);
+function TFontEngine.DrawStringToBitmap(const bm: TBitmap; const s: string; const fixed_pitch: boolean): Integer;
 var
   letter: TBitmap;
   i, w: integer;
@@ -289,6 +289,8 @@ begin
     bm.Canvas.Draw(w, 0, letter);
     w := w + letter.Width;
   end;
+
+  Result := w;
 
   if w < bm.Width then
   begin
