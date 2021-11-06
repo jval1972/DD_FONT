@@ -68,6 +68,7 @@ type
     procedure LoadFromStream(const strm: TStream);
     procedure SaveToFile(const fn: string);
     procedure LoadFromFile(const fn: string);
+    procedure AttachTo(const ff: TFontEngine);
     property Height: Integer read fHeight write fHeight;
     property Pitch: TFontPitch read fPitch write fPitch;
     property Style: TFontStylesBase read fStyle write fStyle;
@@ -472,6 +473,22 @@ begin
   finally
     fs.Free;
   end;
+end;
+
+procedure TFontEngine.AttachTo(const ff: TFontEngine);
+begin
+  fHeight := ff.Height;
+  fPitch := ff.Pitch;
+  fStyle := ff.Style;
+  fCharset := ff.Charset;
+  fFontName := ff.FontName;
+  fDrawWidth := ff.DrawWidth;
+  fDrawHeight := ff.DrawHeight;
+  fFontSize := ff.FontSize;
+  fFrontColor := ff.FrontColor;
+  fBackColor := ff.BackColor;
+  fGridWidth := ff.GridWidth;
+  fGridHeight := ff.GridHeight;
 end;
 
 end.
