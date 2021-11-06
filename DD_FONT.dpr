@@ -48,7 +48,9 @@ uses
   ff_slider in 'ff_slider.pas',
   ff_doomfont in 'ff_doomfont.pas',
   ff_tmp in 'ff_tmp.pas',
-  ff_palettes in 'ff_palettes.pas';
+  ff_palettes in 'ff_palettes.pas',
+  ff_wad in 'ff_wad.pas',
+  ff_wadwriter in 'ff_wadwriter.pas';
 
 {$R *.res}
 
