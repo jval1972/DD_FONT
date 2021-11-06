@@ -47,6 +47,8 @@ function MkShortName(const fname: string): string;
 
 procedure SaveImageToDisk(const b: TBitmap; const imgfname: string);
 
+procedure memcpy(const dest0: pointer; const src0: pointer; count0: integer);
+
 type
   TDNumberList = class
   private
@@ -220,6 +222,11 @@ begin
   end
   else
     b.SaveToFile(imgfname);
+end;
+
+procedure memcpy(const dest0: pointer; const src0: pointer; count0: integer);
+begin
+  Move(src0^, dest0^, count0);
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
