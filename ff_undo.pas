@@ -361,7 +361,7 @@ begin
   UndoStack := TUndoStack.Create;
   RedoStack := TRedoStack.Create;
   CompressionLevel := clNone;
-  StreamType := sstFile;
+  StreamType := sstMemory;
 end;
 
 destructor TUndoRedoManager.Destroy;
