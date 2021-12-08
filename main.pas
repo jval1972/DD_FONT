@@ -42,7 +42,7 @@ const
 
 const
   MOUSEWHEELTIMEOUT = 100; // Msecs until next mouse wheel even to be proccessed
-  
+
 type
   TForm1 = class(TForm)
     TopToolbarPanel: TPanel;
