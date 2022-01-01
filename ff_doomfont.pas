@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 //
 //  DD_FONT: Doom Font Creator
-//  Copyright (C)2021-2022 by Jim Valavanis
+//  Copyright (C) 2021-2022 by Jim Valavanis
 //
 //  This portion of this program is freeware with no commercial use restriction
 //    See also: https://www.dafont.com/doom.font
