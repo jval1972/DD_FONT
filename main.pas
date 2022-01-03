@@ -464,7 +464,7 @@ begin
   for i := 0 to ExternalFonts.Count - 1 do
   begin
     p := PChar(ExternalFonts.Strings[i]);
-    RemoveFontResource(p);
+    RemoveFontResourceEx(p, FR_PRIVATE, 0);
     SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   end;
   ExternalFonts.Free;
@@ -1123,7 +1123,7 @@ begin
   Screen.Cursor := crHourGlass;
   try
     p := PChar(ttffile);
-    AddFontResource(p);
+    AddFontResourceEx(p, FR_PRIVATE, nil);
     SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
     ExternalFonts.Add(ttffile);
 
@@ -1158,7 +1158,7 @@ begin
   end;
 
   p := PChar(tmpfile);
-  AddFontResource(p);
+  AddFontResourceEx(p, FR_PRIVATE, nil);
   SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   ExternalFonts.Add(tmpfile);
 end;
