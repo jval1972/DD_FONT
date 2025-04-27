@@ -15,7 +15,7 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
-//  Foundation, inc., 59 Temple Place - Suite 330, Boston, MA
+//  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 //  02111-1307, USA.
 //
 // DESCRIPTION:
@@ -465,7 +465,7 @@ begin
   begin
     p := PChar(ExternalFonts.Strings[i]);
     RemoveFontResourceEx(p, FR_PRIVATE, 0);
-    SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+//    SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   end;
   ExternalFonts.Free;
 
@@ -1124,7 +1124,7 @@ begin
   try
     p := PChar(ttffile);
     AddFontResourceEx(p, FR_PRIVATE, nil);
-    SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+//    SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
     ExternalFonts.Add(ttffile);
 
     fList := TStringList.Create;
@@ -1159,7 +1159,7 @@ begin
 
   p := PChar(tmpfile);
   AddFontResourceEx(p, FR_PRIVATE, nil);
-  SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+ // SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   ExternalFonts.Add(tmpfile);
 end;
 
